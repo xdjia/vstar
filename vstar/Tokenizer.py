@@ -500,8 +500,8 @@ def learn_tokenizer(oracle: Oracle,
     valid_strs = []
 
     for (a, b), crs in list(cr2crs.items()):
-        calls = set(a2 for a2, _ in crs)
-        retns = set(b2 for _, b2 in crs)
+        calls: list[str] = sorted(set(a2 for a2, _ in crs))
+        retns: list[str] = sorted(set(b2 for _, b2 in crs))
         cxts = list(set(cr2cxt[a, b]))
         u, z, v = cxts[0]
 
@@ -569,42 +569,42 @@ def learn_tokenizer(oracle: Oracle,
     a2token: dict[str, Token] = {}
 
     for module, ((a, b), crs) in enumerate(cr2crs.items()):
-        calls = set(a2 for a2, _ in crs)
-        retns = set(b2 for _, b2 in crs)
+        calls:list[str] = sorted(set(a2 for a2, _ in crs))
+        retns:list[str] = sorted(set(b2 for _, b2 in crs))
         cxts = list(set(cr2cxt[a, b]))
 
         # NOTE - learn call token
         if len(a) == 1:
             assert len(calls) == 1
-            call_token = Token(rex=a, strs=list(
-                calls), udfa=single_str_udfa(a))
+            call_token = Token(rex=a, strs=calls,
+                               udfa=single_str_udfa(a))
 
         else:
             def cal_oracle(s: str):
                 return all(oracle(u + a[0] + s + a[-1] + z + b + v)
                            for u, z, v in cxts)
             info(
-                f"Learn call token from xs {pp(list(calls), delim=',')} " +
+                f"Learn call token from xs {pp(calls, delim=',')} " +
                 f"uzvs {pp(cxts, delim=',')}",)
             inner_cxts = [w[1:-1] for w in calls]
             call_token = learn_token(
                 cal_oracle, chars, inner_cxts, a[0], a[-1])
-            call_token.strs = list(calls)
+            call_token.strs = calls
 
         # NOTE - learn retn token
         if len(b) == 1:
             assert len(retns) == 1
-            retn_token = Token(rex=b, strs=list(
-                calls), udfa=single_str_udfa(b))
+            retn_token = Token(rex=b, strs=
+                calls, udfa=single_str_udfa(b))
         else:
             def ret_oracle(s: str):
                 return all(oracle(u + a + z + b[0] + s + b[-1] + v)
                            for u, z, v in cxts)
-            info(f"Learn ret token from string" + pp(list(retns)))
+            info(f"Learn ret token from string" + pp(retns))
             inner_cxts = [w[1:-1] for w in retns]
             retn_token = learn_token(
                 ret_oracle, chars, inner_cxts, b[0], b[-1])
-            retn_token.strs = list(retns)
+            retn_token.strs = retns
 
         call_token.token_type = 'call'
         retn_token.token_type = 'return'

@@ -23,14 +23,13 @@ parser.add_argument("--arvada", action="store_true", help="Evaluate Arvada.")
 parser.add_argument("--glade",  action="store_true", help="Evaluate Glade.")
 
 
-
 if __name__ == '__main__':
-    grammars = ['lisp', 'json', 'xml', 'while', 'mathexpr']
+    grammars = ['json', 'lisp', 'xml', 'while', 'mathexpr']
     
     args = parser.parse_args()
     
     if args.arvada:
-        print("== Evaluate Arvada")
+        print("== Evaluate Arvada", flush=True)
         for grammar in grammars:
             command = [
                 'python', 'other-artifact/arvada/search.py',
@@ -50,12 +49,12 @@ if __name__ == '__main__':
             end_time = time.time()
             elapsed_time = end_time - start_time
             
-            print(f"{grammar} time: {elapsed_time:.2f} seconds")
+            print(f"{grammar} time: {elapsed_time:.2f} seconds", flush=True)
     
         exit(0)
         
     if args.glade:
-        print("==  Evaluate Glade")
+        print("== Evaluate Glade", flush=True)
         os.chdir('./other-artifact/glade/')
         
         for grammar in grammars:
@@ -72,21 +71,21 @@ if __name__ == '__main__':
             end_time = time.time()
             elapsed_time = end_time - start_time
             
-            print(f"{grammar} time: {elapsed_time:.2f} seconds")
+            print(f"{grammar} time: {elapsed_time:.2f} seconds", flush=True)
         
         exit(0)
 
     logger.setLevel("CRITICAL")
     # logger.setLevel("INFO")
 
-    print(f"Grammar, Recall, Precision, F1, \\#Queries," +
-          f"\\%Q(Token), \\%Q(VPA), \\#CE, Time")
-
+    print(f"Grammar, Recall, Precision, F1, #Queries," +
+          f"%Q(Token), %Q(VPA), #CE, Time", flush=True)
+    
     args.renew_pattern = True
 
     for grammar_name in grammars:
         args.grammar = grammar_name
-
+        
         # NOTE - infer grammar and count number of membership queries
         #        for token inference and VPA learning
         start_time = time.time()
@@ -101,4 +100,4 @@ if __name__ == '__main__':
               f"{format((num_q_token / num_q_all) * 100, '.2f')}%, " +
               f"{format((1 - num_q_token / num_q_all) * 100, '.2f')}%, " +
               f"{num_ce}, " +
-              f"{format(end_time - start_time, '.0f')}s")
+              f"{format(end_time - start_time, '.0f')}s", flush=True)

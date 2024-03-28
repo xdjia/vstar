@@ -32,7 +32,7 @@ class Oracle:
         self.cache: dict[str, bool] = {}
         self.time_spent = 0.0
         self.try_checks = 0
-        self.command = f'micro-benchmark/{name}/cpp-build/file_parser'
+        self.command = f'micro-benchmarks/{name}/cpp-build/file_parser'
 
         match mode:
             case "internal":

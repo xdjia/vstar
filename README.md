@@ -2,11 +2,61 @@
 
 Welcome to the artifact repository for the PLDI paper #779, "V-Star: Learning Visibly Pushdown Grammars from Program Inputs." This artifact has been designed to reproduce the results presented in Table 1 of the paper.
 
-## Using Docker
+## Option 1: Using Docker
+
+Our results can be reproduced using a Docker image, which can be fetched by:
+
+1. Pull the image from Docker Hub: `docker pull xdjia/vstar:latest`, or
+2. Build the image locally: `docker build -t xdjia/vstar:latest .`.
 
 
+### Evaluate V-Star
 
-## Build from source
+V-Star has two modes: in the "internal" mode, the oracle checks whether a string is valid by calling a Python parsing library. The "external" mode of V-Star, reported in our paper, calls an external binary to validate a string instead. The two modes only affect the execution time: "external" mode would be much slower.
+
+To evaluate V-Star in the "internal" mode, run `docker run --rm xdjia/vstar:latest`.
+Below shows the results of internal mode on a MacBook Air m2 with 8G memory:
+
+|Grammar | Recall | Precision | F1 | #Queries | %Q(Token) | %Q(VPA) | #CE | Time |
+| - | -: | -: | -: | -: | -: | -: | -: | -: |
+| lisp | 1.0 | 1.0 | 1.0 | 16210 | 1.37% | 98.63% | 693 | 6s |
+| json | 1.0 | 1.0 | 1.0 | 540927 | 2.71% | 97.29% | 8043 | 117s |
+| xml | 1.0 | 1.0 | 1.0 | 207756 | 94.93% | 5.07% | 682 | 31s |
+| while | 1.0 | 1.0 | 1.0 | 1439988 | 9.40% | 90.60% | 119 | 194s |
+| mathexpr | 1.0 | 1.0 | 1.0 | 4961316 | 0.11% | 99.89% | 2602 | 948s |
+
+To evaluate V-Star in the "external" mode, run `docker run --rm xdjia/vstar:latest --mode external`.
+
+
+### Evaluate Glade and Arvada
+
+In comparison, our paper reports the execution times of two other grammar inference tools, namely Glade and Arvada (but their accuracies are adopted from Arvada's paper, so only times are relevant here). To evaluate them:
+
+1. For Glade, run `docker run --rm xdjia/vstar:latest --glade`. Below is an example output:
+
+    ```
+    == Evaluate Glade
+    json time: 16.69 seconds
+    lisp time: 5.58 seconds
+    xml time: 21.71 seconds
+    while time: 13.20 seconds
+    mathexpr time: 27.81 seconds
+    ```
+
+2. For Arvada, run `docker run --rm xdjia/vstar:latest --arvada`. Below is an example output:
+
+    ```
+    == Evaluate Arvada
+    json time: 21.02 seconds
+    lisp time: 5.37 seconds
+    xml time: 50.33 seconds
+    while time: 15.05 seconds
+    mathexpr time: 18.61 seconds
+    ```
+
+That's it!
+
+## Option 2: Build from source
 
 To reproduce the results, follow these steps:
 

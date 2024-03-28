@@ -55,7 +55,7 @@ def infer_grammar(args):
     grammar_name = args.grammar
 
     # NOTE - create oracle
-    oracle = create_oracle(grammar_name, load_cache=False)
+    oracle = create_oracle(grammar_name, load_cache=False, mode=args.mode)
 
     # NOTE - collect data
     seed_strings = Eval.collect_seed_strings(oracle, grammar_name)

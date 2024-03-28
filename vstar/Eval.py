@@ -83,7 +83,7 @@ def collect_seed_strings(oracle, grammar_name: str) -> list[str]:
         seed_strings.append(s)
         assert oracle(s)
 
-    return seed_strings
+    return sorted(seed_strings)
 
 
 def collect_test_strings(oracle, grammar_name: str) -> list[str]:
