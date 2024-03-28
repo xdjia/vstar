@@ -19,8 +19,8 @@ Below shows the results of internal mode on a MacBook Air m2 with 8G memory:
 
 |Grammar | Recall | Precision | F1 | #Queries | %Q(Token) | %Q(VPA) | #CE | Time |
 | - | -: | -: | -: | -: | -: | -: | -: | -: |
-| lisp | 1.0 | 1.0 | 1.0 | 16210 | 1.37% | 98.63% | 693 | 6s |
 | json | 1.0 | 1.0 | 1.0 | 540927 | 2.71% | 97.29% | 8043 | 117s |
+| lisp | 1.0 | 1.0 | 1.0 | 16210 | 1.37% | 98.63% | 693 | 6s |
 | xml | 1.0 | 1.0 | 1.0 | 207756 | 94.93% | 5.07% | 682 | 31s |
 | while | 1.0 | 1.0 | 1.0 | 1439988 | 9.40% | 90.60% | 119 | 194s |
 | mathexpr | 1.0 | 1.0 | 1.0 | 4961316 | 0.11% | 99.89% | 2602 | 948s |
@@ -60,7 +60,7 @@ That's it!
 
 To reproduce the results, follow these steps:
 
-1. **Environment Setup**: First, set up a virtual Python (≥3.11) environment and install the V-Star library.
+1. **Environment Setup**: First, set up a virtual Python (≥3.12) environment and install the V-Star library.
 
     ```shell
     python3 -m venv .venv
