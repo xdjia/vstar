@@ -17,7 +17,7 @@ V-Star has two modes: in the "internal" mode, the oracle checks whether a string
 To evaluate V-Star in the "internal" mode, run `docker run --rm xdjia/vstar:latest`.
 Below shows the results of internal mode on a MacBook Air m2 with 8G memory:
 
-|Grammar | Recall | Precision | F1 | #Queries | %Q(Token) | %Q(VPA) | #CE | Time |
+|Grammar | Recall | Precision | F1 | #Queries | %Q(Token) | %Q(VPA) | #TS | Time |
 | - | -: | -: | -: | -: | -: | -: | -: | -: |
 | json | 1.0 | 1.0 | 1.0 | 540927 | 2.71% | 97.29% | 8043 | 117s |
 | lisp | 1.0 | 1.0 | 1.0 | 16210 | 1.37% | 98.63% | 693 | 6s |
