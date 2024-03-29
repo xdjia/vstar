@@ -155,7 +155,7 @@ def remove_unacceptable_states(dfa: DFA) -> None:
 
     dfa.mapping.clear()
     dfa.mapping.update(reduced_dfa)
-    dfa.states = list(set([q for q, _ in dfa] +
+    dfa.states = sorted(set([q for q, _ in dfa] +
                           list(dfa.mapping.values())))
     if "" not in dfa.states:
         dfa.states = [""] + dfa.states

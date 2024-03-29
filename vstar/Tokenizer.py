@@ -239,11 +239,8 @@ def learn_token(local_oracle: Callable[[str], bool],
                 suff: str) -> Token:
     """ Learn a token from local oracle and strs. """
 
-    suffixes = list(
-        set(list(s[i:j] for s in strs[:2]
-                 for i, j in allsubs_maxmin(s, 1)) + [""]))
-
-    suffixes.sort()
+    suffixes = sorted(set(list(s[i:j] for s in strs[:2]
+                               for i, j in allsubs_maxmin(s, 1)) + [""]))
 
     info(f"suffixes: {len(suffixes)}, {pp(suffixes, delim=',')}")
 
@@ -382,7 +379,7 @@ def validate_tokenizer(tokenizer: Tokenizer,
 
                     for c in repr_s:
                         call_backup = call_token.copy()
-                        call_token.set(Token(
+                        call_token.replace_with(Token(
                             rex=c, strs=[c], udfa=single_str_udfa(c),
                             token_type="call"))
                         # NOTE - replace call token with candidate call token
@@ -390,7 +387,7 @@ def validate_tokenizer(tokenizer: Tokenizer,
                             info(f"Use {pp(c)} to replace the call token")
                             return validate_tokenizer(tokenizer, strings, True)
 
-                    call_token.set(call_backup)
+                    call_token.replace_with(call_backup)
                     raise ValueError("Assumption broken.")
 
                 call_token = st.pop()
@@ -502,7 +499,7 @@ def learn_tokenizer(oracle: Oracle,
     for (a, b), crs in list(cr2crs.items()):
         calls: list[str] = sorted(set(a2 for a2, _ in crs))
         retns: list[str] = sorted(set(b2 for _, b2 in crs))
-        cxts = list(set(cr2cxt[a, b]))
+        cxts = sorted(set(cr2cxt[a, b]))
         u, z, v = cxts[0]
 
         for s in pln_strings:
@@ -569,9 +566,9 @@ def learn_tokenizer(oracle: Oracle,
     a2token: dict[str, Token] = {}
 
     for module, ((a, b), crs) in enumerate(cr2crs.items()):
-        calls:list[str] = sorted(set(a2 for a2, _ in crs))
-        retns:list[str] = sorted(set(b2 for _, b2 in crs))
-        cxts = list(set(cr2cxt[a, b]))
+        calls: list[str] = sorted(set(a2 for a2, _ in crs))
+        retns: list[str] = sorted(set(b2 for _, b2 in crs))
+        cxts = sorted(set(cr2cxt[a, b]))
 
         # NOTE - learn call token
         if len(a) == 1:
@@ -594,8 +591,7 @@ def learn_tokenizer(oracle: Oracle,
         # NOTE - learn retn token
         if len(b) == 1:
             assert len(retns) == 1
-            retn_token = Token(rex=b, strs=
-                calls, udfa=single_str_udfa(b))
+            retn_token = Token(rex=b, strs=calls, udfa=single_str_udfa(b))
         else:
             def ret_oracle(s: str):
                 return all(oracle(u + a + z + b[0] + s + b[-1] + v)
@@ -715,5 +711,5 @@ def tokenize_string(grammar_name: str, s: str):
     tokens = tokenizer.eagar_tokenize(s)
     ce = expand_tokens(s, tokens)
     info("Token list:" + pp_ce(ce))
-    
+
     return ce

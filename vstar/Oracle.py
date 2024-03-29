@@ -38,9 +38,9 @@ class Oracle:
             case "internal":
                 self._oracle = self.oracle
             case "external":
-                self._oracle = self._parse_internal
+                self._oracle = self._parse_external
         
-    def _parse_internal(self, s:str, timeout = 3):
+    def _parse_external(self, s:str, timeout = 3):
         """
         Does the work of calling the subprocess.
         """

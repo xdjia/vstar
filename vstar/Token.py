@@ -28,7 +28,7 @@ class Token:
     def copy(self):
         return Token(self.rex, self.strs, self.udfa, self.token_type)
 
-    def set(self, token: "Token"):
+    def replace_with(self, token: "Token"):
         """ set self to another token """
         assert self.token_type == token.token_type
 
