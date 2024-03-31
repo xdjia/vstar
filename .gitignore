@@ -149,11 +149,6 @@ fuzzer/
 antlr4-cpp-runtime-4.10.1-source/
 exe/
 *.class
-*.h
-*Parser.*
-*Lexer.*
-*Listener.*
-*BaseLstener.*
 *.swp
 bds/
 test_set/
