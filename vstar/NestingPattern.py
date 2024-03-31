@@ -173,7 +173,7 @@ def find_all_pattern(
     interval_dict: IntervalDict = {}
     pattern_folder = os.path.join(path_to_result, 'nesting_pattern')
     pattern_file = os.path.join(pattern_folder,
-                                f"{oracle.name}.nesting_pattern.picke")
+                                f"{oracle.name}.nesting_pattern.pickle")
 
     if not renew_pattern and os.path.exists(pattern_file):
         with open(pattern_file, 'rb') as handle:

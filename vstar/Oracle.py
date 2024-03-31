@@ -39,6 +39,15 @@ class Oracle:
                 self._oracle = self.oracle
             case "external":
                 self._oracle = self._parse_external
+                
+                # def _oracle(s:str):
+                #     result = self._parse_external(s)
+                #     if result != self.oracle(s):
+                #         print(f"Error: {s} {result} {self.oracle(s)}")
+                #         exit(1)
+                #     return result
+                
+                # self._oracle = _oracle
         
     def _parse_external(self, s:str, timeout = 3):
         """

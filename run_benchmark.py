@@ -78,7 +78,7 @@ if __name__ == '__main__':
     logger.setLevel("CRITICAL")
     # logger.setLevel("INFO")
 
-    print(f"Grammar, Recall, Precision, F1, #Queries," +
+    print(f"Grammar, Recall, Precision, F1, #Queries, " +
           f"%Q(Token), %Q(VPA), #TS, Time", flush=True)
     
     args.renew_pattern = True
