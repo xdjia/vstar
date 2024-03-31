@@ -80,7 +80,7 @@ Below, we display the above results of Glade and Arvada in Markdown table:
 
 Results for Arvada are listed as the means over 10 runs with ± the standard deviation, adhering to the methodology outlined in Arvada's publication.
 
-The above command takes ~2 hours on a MacBook Air m2 with 8G memory.
+The above command takes ~1 hour on a MacBook Air m2 with 8G memory.
 The results are saved under `result/`, and can be (re)printed within the host by running `sh ./display_other_eval.sh`.
 
 That's it!
