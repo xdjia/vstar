@@ -1,0 +1,6 @@
+name: "mathexpr"
+empty: "-6 + 0"
+iserror: true
+extension: ".ex"
+command: "parse_mathexpr"
+traindir: "guides"

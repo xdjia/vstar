@@ -1,0 +1,6 @@
+name: "lisp"
+empty: "(k o)"
+iserror: true
+extension: ".ex"
+command: "parse_lisp"
+traindir: "guides"

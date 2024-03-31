@@ -1,0 +1,6 @@
+name: "while"
+empty: "skip ; skip"
+iserror: true
+extension: ".ex"
+command: "parse_while"
+traindir: "guides"

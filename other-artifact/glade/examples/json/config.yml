@@ -1,0 +1,6 @@
+name: "json"
+empty: "\"M\""
+iserror: true
+extension: ".ex"
+command: "parse_json"
+traindir: "guides"
