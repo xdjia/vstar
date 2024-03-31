@@ -1,0 +1,1 @@
+docker build -t xdjia/vstar:test . && docker run --rm --entrypoint bash -it -v $(pwd)/result:/usr/src/vstar/result xdjia/vstar:test -c "cd other-artifact && ./run_all.sh"
