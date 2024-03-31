@@ -30,13 +30,13 @@ To evaluate V-Star in the "external" mode, run `docker run --rm xdjia/vstar:late
 
 ### Evaluate Glade and Arvada
 
-In comparison, our paper reports the execution times of two other grammar inference tools, namely Glade and Arvada. To evaluate them, run
+In comparison, our paper reports the evaluation results of two other grammar inference tools, namely Glade and Arvada. To evaluate them, run
 
 ```shell
 docker run --rm --entrypoint bash -it -v $(pwd)/result:/usr/src/vstar/result xdjia/vstar:latest -c "cd other-artifact && ./run_all.sh"
 ```
 
-The results are saved in `./result`. Below is an example output:
+Below is an example output:
 
 ```
 # some logging info above ...
@@ -78,7 +78,10 @@ Below, we display the above results of Glade and Arvada in Markdown table:
 | while | 0.91±0.20 | 1.00±0.00 | 0.94±0.14 | 15±1s | 5406±563 |
 | xml | 0.99±0.02 | 1.00±0.00 | 1.00±0.01 | 61±5s | 12000±998 |
 
-The results are saved under `result/`, and can be (re)printed in the host by running `sh ./display_other_eval.sh`.
+Results for Arvada are listed as the means over 10 runs with ± the standard deviation, adhering to the methodology outlined in Arvada's publication.
+
+The above command takes ~2 hours on a MacBook Air m2 with 8G memory.
+The results are saved under `result/`, and can be (re)printed within the host by running `sh ./display_other_eval.sh`.
 
 That's it!
 
