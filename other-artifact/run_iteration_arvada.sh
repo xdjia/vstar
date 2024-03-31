@@ -1,6 +1,6 @@
 #!/bin/bash
-mkdir $HOME/result/
-mkdir $HOME/result/arvada-results
+mkdir -p $HOME/result/
+mkdir -p $HOME/result/arvada-results
 
 if [ $# -lt 1 ]; then
 	echo "Usage: $0 ITERATION-NUM [MAX]"
