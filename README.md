@@ -78,6 +78,8 @@ Below, we display the above results of Glade and Arvada in Markdown table:
 | while | 0.91±0.20 | 1.00±0.00 | 0.94±0.14 | 15±1s | 5406±563 |
 | xml | 0.99±0.02 | 1.00±0.00 | 1.00±0.01 | 61±5s | 12000±998 |
 
+The results are saved under `result/`, and can be (re)printed in the host by running `sh ./display_other_eval.sh`.
+
 That's it!
 
 ## Option 2: Build from source
