@@ -1,4 +1,4 @@
-# V-Star: Artifact
+# V-Star Artifact
 
 Welcome to the artifact repository for the PLDI paper #779, "V-Star: Learning Visibly Pushdown Grammars from Program Inputs." This artifact has been designed to reproduce the results presented in Table 1 of the paper.
 
@@ -30,29 +30,53 @@ To evaluate V-Star in the "external" mode, run `docker run --rm xdjia/vstar:late
 
 ### Evaluate Glade and Arvada
 
-In comparison, our paper reports the execution times of two other grammar inference tools, namely Glade and Arvada (but their accuracies are adopted from Arvada's paper, so only times are relevant here). To evaluate them:
+In comparison, our paper reports the execution times of two other grammar inference tools, namely Glade and Arvada. To evaluate them, run
 
-1. For Glade, run `docker run --rm xdjia/vstar:latest --glade`. Below is an example output:
+```shell
+docker run --rm --entrypoint bash -it -v $(pwd)/result:/usr/src/vstar/result xdjia/vstar:latest -c "cd other-artifact && ./run_all.sh"
+```
 
-    ```
-    == Evaluate Glade
-    json time: 16.69 seconds
-    lisp time: 5.58 seconds
-    xml time: 21.71 seconds
-    while time: 13.20 seconds
-    mathexpr time: 27.81 seconds
-    ```
+The results are saved in `./result`. Below is an example output:
 
-2. For Arvada, run `docker run --rm xdjia/vstar:latest --arvada`. Below is an example output:
+```
+# some logging info above ...
 
-    ```
-    == Evaluate Arvada
-    json time: 21.02 seconds
-    lisp time: 5.37 seconds
-    xml time: 50.33 seconds
-    while time: 15.05 seconds
-    mathexpr time: 18.61 seconds
-    ```
+Glade results:
+
+Grammar & Recall & Precision & F1 & Time & #Queries
+json & 0.42 & 0.98 & 0.59 & 21s & 11454
+lisp & 0.23 & 1.00 & 0.38 & 7s & 3833
+mathexpr & 0.18 & 0.98 & 0.31 & 42s & 19016
+while & 0.01 & 1.00 & 0.02 & 13s & 9180
+xml & 0.26 & 1.00 & 0.42 & 21s & 14914
+
+Arvada results:
+
+Grammar & Recall & Precision & F1 & Time & #Queries
+json & 0.97±0.09 & 0.92±0.08 & 0.94±0.05 & 25±2s & 6784±394
+lisp & 0.38±0.26 & 0.95±0.08 & 0.50±0.18 & 8±2s & 2264±307
+mathexpr & 0.72±0.24 & 0.96±0.03 & 0.80±0.16 & 24±2s & 6634±421
+while & 0.91±0.20 & 1.00±0.00 & 0.94±0.14 & 15±1s & 5406±563
+xml & 0.99±0.02 & 1.00±0.00 & 1.00±0.01 & 61±5s & 12000±998
+```
+
+Below, we display the above results of Glade and Arvada in Markdown table:
+
+| Glade | Recall | Precision | F1 | Time | #Queries |
+| :- | -: | -: | -: | -: | -: |
+| json | 0.42 | 0.98 | 0.59 | 21s | 11454 |
+| lisp | 0.23 | 1.00 | 0.38 | 7s | 3833 |
+| mathexpr | 0.18 | 0.98 | 0.31 | 42s | 19016 |
+| while | 0.01 | 1.00 | 0.02 | 13s | 9180 |
+| xml | 0.26 | 1.00 | 0.42 | 21s | 14914 |
+
+| Arvada | Recall | Precision | F1 | Time | #Queries |
+| :- | -: | -: | -: | -: | -: |
+| json | 0.97±0.09 | 0.92±0.08 | 0.94±0.05 | 25±2s | 6784±394 |
+| lisp | 0.38±0.26 | 0.95±0.08 | 0.50±0.18 | 8±2s | 2264±307 |
+| mathexpr | 0.72±0.24 | 0.96±0.03 | 0.80±0.16 | 24±2s | 6634±421 |
+| while | 0.91±0.20 | 1.00±0.00 | 0.94±0.14 | 15±1s | 5406±563 |
+| xml | 0.99±0.02 | 1.00±0.00 | 1.00±0.01 | 61±5s | 12000±998 |
 
 That's it!
 
@@ -203,7 +227,7 @@ python main.py --log-level INFO --grammar lisp --prec
 
 ## Project Structure
 
-Here is an overview of the main components of the Project V-Star artifact:
+Here is an overview of the main components of the V-Star artifact:
 
 - `vstar/`: Contains all source code for the V-Star algorithms.
 - `micro-benchmarks/`: Hosts the datasets used for grammar learning and evaluation, organized into subdirectories for each grammar.

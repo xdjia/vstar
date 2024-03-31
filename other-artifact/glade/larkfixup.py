@@ -3,10 +3,10 @@ from collections import defaultdict
 import re
 
 
-grammar_line = re.compile("(\[GRAMMAR\] )(.*)")
+grammar_line = re.compile("(\\[GRAMMAR\\] )(.*)")
 final_gram_line = re.compile("([mn][0-9]+): (.*)")
 grammar = defaultdict(set)
-merge_line = re.compile("\[MERGE\] (.*): (.*) == (.*)")
+merge_line = re.compile("\\[MERGE\\] (.*): (.*) == (.*)")
 equiv_sets = []
 equiv_pairs = set()
 replace_map = {}
@@ -55,7 +55,7 @@ def process_grammar_line(line, match):
     m = final_gram_line.match(outline)
     assert(m)
     rhs = m.group(2)
-    alt_node = re.compile("n[0-9]+( \| n[0-9]+)+")
+    alt_node = re.compile("n[0-9]+( \\| n[0-9]+)+")
     if alt_node.match(rhs):
         nonterminals = [nt.strip() for nt in rhs.split("|")]
         lhs = m.group(1)
@@ -101,14 +101,14 @@ def fixup_merge_nodes():
             to_remove = []
             for exp in grammar[nt]:
                 old_len = len(grammar)
-                rep_rule_match = re.match(f"([nm][0-9]+) ([nm][0-9]+)\* ([nm][0-9]+)", exp)
+                rep_rule_match = re.match(f"([nm][0-9]+) ([nm][0-9]+)\\* ([nm][0-9]+)", exp)
                 if rep_rule_match:
                     if not rep_rule_match.group(2) == nt: continue
                     if recurses_to_target(nt, rep_rule_match):
                         to_remove.append(exp)
                 elif re.match('n[0-9]+', exp):
                    for nt_rule in grammar[exp]:
-                        rep_rule_match = re.match(f"([nm][0-9]+) ([nm][0-9]+)\* ([nm][0-9]+)", nt_rule)
+                        rep_rule_match = re.match(f"([nm][0-9]+) ([nm][0-9]+)\\* ([nm][0-9]+)", nt_rule)
                         if rep_rule_match:
                             if recurses_to_target(nt, rep_rule_match):
                                 to_remove.append(exp)

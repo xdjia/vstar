@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 .syncthing.*
-**/.DS_Store
+./**/.DS_Store
 data/
 
 .antlr
@@ -162,7 +162,7 @@ runs
 *.pth.tar
 picohttpparser/parserequests
 result*/
-**/*results/
+./**/*results/
 *.out
 __MACOSX/
 file_parser

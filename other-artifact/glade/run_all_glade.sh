@@ -26,4 +26,4 @@ while read bench; do
 	else
 		echo "${bench}-results.asv already exists, not going to re-run that"
 	fi
-done < $HOME/bench_names
+done < ../bench_names
