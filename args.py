@@ -36,5 +36,10 @@ def parse_args():
                         default=False,
                         help="Ignore the previously generated and cached nesting patterns and regenerate them.")
 
+    parser.add_argument("--oracle", type=str, help="The path to <run_my_binary.sh>.")
+    parser.add_argument("--name", type=str, help="The name of custom binary oracle.")
+    parser.add_argument("--seeds", type=str, help="The path to seed strings of custom binary oracle.")
+    parser.add_argument("--recall-dataset", type=str, help="The path to the recall dataset of custom binary oracle.")
+    
     args = parser.parse_args()
     return args

@@ -5,7 +5,7 @@ from .Colors import blue
 from .Utils import info, path_to_result
 from .Utils import pp
 
-# NOTE - A nesting pattern is (s=u+x+v+y+z, u,x,v,y,z)
+# NOTE - A nesting pattern is (s,u,x,v,y,z), where s=u+x+v+y+z.
 NestPattern = tuple[str, str, str, str, str, str]
 # NOTE - (s,(i,j),(k,l)): call=s[i:j],ret=s[k,l]
 IntNestPattern = tuple[str, tuple[tuple[int, int], tuple[int, int]]]
@@ -167,8 +167,13 @@ def find_pattern(oracle, s: str) -> tuple[IntervalList, IntervalList]:
 
 def find_all_pattern(
         oracle: Oracle,
-        seed_strings,
+        seed_strings: list[str],
         renew_pattern=False) -> IntervalDict:
+    """Find all nesting patterns within each seed string.
+
+    Return: An IntervalDict `{s: ([(i,j), ...], [(k,l), ...]), ...}`, where the key `s` is a seed string, the value contains two lists. The first list contains the indices of `x`, and the second list contains the indices of `y`. 
+    Nesting pattern `(x, y)` in `s` is `(s[i:j], s[k:l])`.
+    """
 
     interval_dict: IntervalDict = {}
     pattern_folder = os.path.join(path_to_result, 'nesting_pattern')

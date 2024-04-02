@@ -14,7 +14,7 @@ import pickle
 
 # NOTE - internal mode: use Python's Lark library as oracle for faster results
 # NOTE - external mode: use call of external binaries as oracle, more practical but slower
-MODE = Literal["internal"] | Literal["external"]
+MODE = Literal["internal"] | Literal["external"] | Literal["custom"]
 
 
 lark_grammars = ["json", "lisp", "xml", "while", "mathexpr"]
@@ -26,30 +26,35 @@ parser = {
 
 
 class Oracle:
-    def __init__(self, name: str, oracle, mode:MODE='internal') -> None:
+    def __init__(self, name: str, mode: MODE, binary_path: None | str = None) -> None:
         self.name = name
-        self.oracle: Callable[[str], bool] = oracle
         self.cache: dict[str, bool] = {}
         self.time_spent = 0.0
         self.try_checks = 0
-        self.command = f'micro-benchmarks/{name}/cpp-build/file_parser'
+
+        self.command: str = ""
 
         match mode:
             case "internal":
-                self._oracle = self.oracle
+                self._oracle = lark_oracle(name)
             case "external":
+                self.command = f'micro-benchmarks/{name}/cpp-build/file_parser'
                 self._oracle = self._parse_external
-                
+
                 # def _oracle(s:str):
                 #     result = self._parse_external(s)
                 #     if result != self.oracle(s):
                 #         print(f"Error: {s} {result} {self.oracle(s)}")
                 #         exit(1)
                 #     return result
-                
+
                 # self._oracle = _oracle
-        
-    def _parse_external(self, s:str, timeout = 3):
+            case "custom":
+                assert binary_path
+                self.command = binary_path
+                self._oracle = self._parse_external
+
+    def _parse_external(self, s: str, timeout=3):
         """
         Does the work of calling the subprocess.
         """
@@ -60,7 +65,8 @@ class Oracle:
         f.flush()
         try:
             # With check = True, throws a CalledProcessError if the exit code is non-zero
-            subprocess.run([self.command, f_name], stdout=FNULL, stderr=FNULL, timeout=timeout, check=True)
+            subprocess.run([self.command, f_name], stdout=FNULL,
+                           stderr=FNULL, timeout=timeout, check=True)
             f.close()
             FNULL.close()
             return True
@@ -73,7 +79,6 @@ class Oracle:
             f.close()
             FNULL.close()
             return True
-        
 
     def __call__(self, s) -> Any:
         self.try_checks += 1
@@ -131,19 +136,21 @@ def load_oracle_cache(name: str):
     return checked
 
 
-def create_oracle(name: str, load_cache=False, 
-                  mode:MODE="internal") -> Oracle:
+def create_oracle(name: str, 
+                  mode: MODE,
+                  load_cache=False,
+                  binary_path: None | str = None) -> Oracle:
 
-    oracle = Oracle(name, lark_oracle(name), mode=mode)
+    oracle = Oracle(name=name, mode=mode, binary_path=binary_path)
+
     if load_cache:
         oracle.cache = load_oracle_cache(name)
         info(f"{len(oracle.cache)} cached strings.")
 
     if name in lark_grammars:
         info("Use Lark grammar.")
-        return oracle
 
-    raise ValueError("Unknown grammar name.")
+    return oracle
 
 
 if __name__ == "__main__":

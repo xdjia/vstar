@@ -12,21 +12,24 @@ from .Utils import info, pp, logger
 
 def compute_recall(grammar_name: str, oracle: Oracle,
                    vpa_learner: VPALearner, tokenizer: Tokenizer,
-                   recall_test_strs: None | list[str] = None) -> tuple[float, list[CE]]:
+                   path_to_test_strs: None | str) -> tuple[float, list[CE]]:
     """ Compute the recall of the VPA hold by `vpa_learner`. 
 
     Returns: recall and list of counterexamples.
     """
 
-    if not recall_test_strs:
-        recall_test_strs = []
+    recall_test_strs = []
+    if path_to_test_strs is None:
         path_to_test_strs = os.path.join(
             "micro-benchmarks", grammar_name, "test_set", '*.ex')
-        info(path_to_test_strs)
-        for seed_string in glob(path_to_test_strs):
-            s = open(seed_string).readline().strip()
-            if oracle(s):
-                recall_test_strs.append(s)
+    else:
+        path_to_test_strs = os.path.join(path_to_test_strs, "*")
+
+    info(path_to_test_strs)
+    for seed_string in glob(path_to_test_strs):
+        s = open(seed_string).readline().strip()
+        if oracle(s):
+            recall_test_strs.append(s)
 
     if not recall_test_strs:
         raise ValueError(f"No recall test strings found.")
@@ -74,11 +77,11 @@ def compute_prec(oracle, strings: list[str]) -> tuple[float, list[str]]:
     return prec, invalid_strings
 
 
-def collect_seed_strings(oracle, grammar_name: str) -> list[str]:
+def collect_seed_strings(oracle, path: str) -> list[str]:
     """ Collect seed strings for micro-benchmarks. """
 
     seed_strings = []
-    for seed_string in glob(f"micro-benchmarks/{grammar_name}/guides/*.ex"):
+    for seed_string in glob(path):
         s = open(seed_string).readline().strip()
         seed_strings.append(s)
         assert oracle(s)

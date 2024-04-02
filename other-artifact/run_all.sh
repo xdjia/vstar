@@ -13,17 +13,21 @@ if [ ! -z "$RUN_ONLY_MICRO" ]; then
 	echo "Note: only running microbenchmarks. Unset (i.e. set to the empty string) RUN_ONLY_MICRO if this is not the desired behavior"
 fi
 
-HOME="/usr/src/vstar"
+# Check if VHOME (the root of V-Star artifact) is set
+if [ -z "$VHOME" ]; then
+    # VHOME not set, indicating a Docker env.
+    VHOME="/usr/src/vstar"
+fi
 
 # NOTE - Evaluate Glade
-cd $HOME/other-artifact/glade && PYTHON=/usr/local/bin/python ./run_all_glade.sh
-cp -r $HOME/other-artifact/glade/glade-results $HOME/result/
+cd $VHOME/other-artifact/glade && PYTHON=$(which python) ./run_all_glade.sh
+mv $VHOME/other-artifact/glade/glade-results $VHOME/result/
 
 # NOTE - Evaluate Arvada
 cd /usr/src/vstar/other-artifact
 
-HOME=$HOME ./run_iteration_arvada.sh 0 $MAX_ITS
-HOME=$HOME ./run_evaluation_arvada.sh 0 $MAX_ITS
+HOME=$VHOME ./run_iteration_arvada.sh 0 $MAX_ITS
+HOME=$VHOME ./run_evaluation_arvada.sh 0 $MAX_ITS
 
-cd $HOME
+cd $VHOME
 sh ./display_other_eval.sh

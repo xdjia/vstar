@@ -1,9 +1,10 @@
+import os
 import tqdm as tqdm
 
 from args import parse_args
 
 import vstar.Eval as Eval
-from vstar.Oracle import create_oracle
+from vstar.Oracle import MODE, Oracle, create_oracle
 from vstar import SampleStrings, logger
 from vstar.Utils import info, lowercase, pp, uppercase, digits
 from vstar.NestingPattern import find_all_pattern, find_pattern
@@ -11,24 +12,18 @@ from vstar.MatrixVStar import build_L2str, learn_vpa, load_learner, print_gramma
 from vstar.Tokenizer import learn_tokenizer, load_tokenizer, tokenize_string
 
 
-def eval_recall(grammar_name: str, mode="internal"):
-    # NOTE - create oracle
-    oracle = create_oracle(grammar_name, load_cache=False, mode=mode)
-
-    tokenizer = load_tokenizer(grammar_name)
-    vpa_learner = load_learner(grammar_name)
+def eval_recall(name: str, oracle:Oracle, path_recalls:None|str):
+    tokenizer = load_tokenizer(name)
+    vpa_learner = load_learner(name)
     vpa_learner.set_oracle(oracle)
     vpa_learner.consolidate_vpa()
     recall, _ = Eval.compute_recall(
-        grammar_name, oracle, vpa_learner, tokenizer)
+        name, oracle, vpa_learner, tokenizer, path_recalls)
 
     return recall
 
 
-def eval_prec(grammar_name: str):
-    # NOTE - create oracle
-    oracle = create_oracle(grammar_name, load_cache=False)
-
+def eval_prec(grammar_name: str, oracle:Oracle):
     vpa_learner = load_learner(grammar_name)
     vpa_learner.set_oracle(oracle)
     grammar, L2eps = vpa_learner.vpa2vpg()
@@ -52,18 +47,27 @@ def eval_prec(grammar_name: str):
 
 def infer_grammar(args):
 
-    grammar_name = args.grammar
-
     # NOTE - create oracle
-    oracle = create_oracle(grammar_name, load_cache=False, mode=args.mode)
+    if args.name:
+        oracle = create_oracle(args.name, mode="custom",
+                               binary_path=args.oracle, load_cache=False)
+    else:
+        oracle = create_oracle(args.grammar, mode=args.mode, load_cache=False)
 
     # NOTE - collect data
-    seed_strings = Eval.collect_seed_strings(oracle, grammar_name)
-
+    if args.name:
+        seeds_path = os.path.join(args.seeds, "*")
+    else:
+        seeds_path = f"micro-benchmarks/{args.grammar}/guides/*.ex"
+        
+    seed_strings = Eval.collect_seed_strings(oracle, seeds_path)
+    
+    assert seed_strings, "Error: No seed strings"
+    
     # NOTE - identify nesting patterns
     intervalDict = find_all_pattern(
         oracle, seed_strings, renew_pattern=args.renew_pattern)
-
+    
     pln_strings = [s for s in seed_strings
                    if s not in intervalDict]
 
@@ -76,8 +80,9 @@ def infer_grammar(args):
         learn_tokenizer(oracle, intervalDict, pln_strings, chars)
 
     info("After #Q(Token) ")
+
     # NOTE - Number of membership queries used for token inference
-    num_q_token = oracle.print_info()
+    num_queries_token = oracle.print_info()
 
     vpa_learner, num_ce = learn_vpa(
         oracle,
@@ -91,11 +96,11 @@ def infer_grammar(args):
 
     info("After #Q(VPA) ")
     # NOTE - Number of all membership queries
-    num_q_all = oracle.print_info()
+    num_queries_all = oracle.print_info()
 
     vpa_learner.dump_learner()
 
-    return num_q_token, num_q_all, num_ce
+    return num_queries_token, num_queries_all, num_ce
 
 
 def main():
@@ -104,21 +109,32 @@ def main():
 
     if args.log_level:  # DEBUG, INFO, ERROR
         logger.setLevel(args.log_level)
-
-    grammar_name = args.grammar
+        
+    # NOTE - create oracle
+    if args.name:
+        print("Custom oracle")
+        oracle = create_oracle(args.name, mode="custom",
+                               binary_path=args.oracle, load_cache=False)
+    else:
+        oracle = create_oracle(args.grammar, load_cache=False, mode=args.mode)
 
     # NOTE - Evaluate the precision of the cached learner.
     if args.prec:
-        eval_prec(grammar_name)
+        if args.name:
+            eval_prec(args.name, oracle=oracle)
+        else:
+            eval_prec(args.grammar, oracle=oracle)
         exit()
 
     # NOTE - Evaluate the recall of the cached learner.
     if args.recall:
-        eval_recall(grammar_name)
+        if args.name:
+            eval_recall(args.name, oracle=oracle, path_recalls=args.recall_dataset)
+        else:
+            eval_recall(args.grammar, oracle=oracle, path_recalls=None)
         exit()
 
-    # NOTE - create oracle
-    oracle = create_oracle(grammar_name, load_cache=False)
+
 
     if args.check:
         info(f'𝒪({pp(args.check)})={oracle(args.check)}')

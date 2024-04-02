@@ -158,3 +158,4 @@ result*/
 *.out
 __MACOSX/
 file_parser
+micro-benchmarks/*/parse_*
