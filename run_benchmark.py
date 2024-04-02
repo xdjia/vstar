@@ -28,6 +28,7 @@ if __name__ == '__main__':
     logger.setLevel("CRITICAL")
     # logger.setLevel("INFO")
 
+    # grammars = ['lisp']
     grammars = ['json', 'lisp', 'xml', 'while', 'mathexpr']
 
     print(f"Grammar, Recall, Precision, F1, #Queries, " +
@@ -44,10 +45,12 @@ if __name__ == '__main__':
         num_q_token, num_q_all, num_ce = infer_grammar(args)
         end_time = time.time()
 
-        oracle = create_oracle(grammar_name, args.mode)
+        recall = eval_recall(grammar_name, None)
 
-        recall = eval_recall(grammar_name, oracle, None)
+        oracle = create_oracle(grammar_name, mode="internal")  # to compute the precision faster
+        # oracle = create_oracle(grammar_name, mode=args.mode)
         prec = eval_prec(grammar_name, oracle)
+        
         f1 = 2 / (1 / recall + 1 / prec)
 
         print(f"{grammar_name}, {recall}, {prec}, {f1}, {num_q_all}, " +

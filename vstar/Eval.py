@@ -10,7 +10,7 @@ from .Tokenizer import Tokenizer, expand_tokens
 from .Utils import info, pp, logger
 
 
-def compute_recall(grammar_name: str, oracle: Oracle,
+def compute_recall(grammar_name: str,
                    vpa_learner: VPALearner, tokenizer: Tokenizer,
                    path_to_test_strs: None | str) -> tuple[float, list[CE]]:
     """ Compute the recall of the VPA hold by `vpa_learner`. 
@@ -28,8 +28,7 @@ def compute_recall(grammar_name: str, oracle: Oracle,
     info(path_to_test_strs)
     for seed_string in glob(path_to_test_strs):
         s = open(seed_string).readline().strip()
-        if oracle(s):
-            recall_test_strs.append(s)
+        recall_test_strs.append(s)
 
     if not recall_test_strs:
         raise ValueError(f"No recall test strings found.")

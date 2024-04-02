@@ -12,13 +12,11 @@ from vstar.MatrixVStar import build_L2str, learn_vpa, load_learner, print_gramma
 from vstar.Tokenizer import learn_tokenizer, load_tokenizer, tokenize_string
 
 
-def eval_recall(name: str, oracle:Oracle, path_recalls:None|str):
+def eval_recall(name: str, path_recalls:None|str):
     tokenizer = load_tokenizer(name)
     vpa_learner = load_learner(name)
-    vpa_learner.set_oracle(oracle)
-    vpa_learner.consolidate_vpa()
     recall, _ = Eval.compute_recall(
-        name, oracle, vpa_learner, tokenizer, path_recalls)
+        name, vpa_learner, tokenizer, path_recalls)
 
     return recall
 
@@ -98,6 +96,7 @@ def infer_grammar(args):
     # NOTE - Number of all membership queries
     num_queries_all = oracle.print_info()
 
+    vpa_learner.consolidate_vpa()
     vpa_learner.dump_learner()
 
     return num_queries_token, num_queries_all, num_ce
@@ -129,9 +128,9 @@ def main():
     # NOTE - Evaluate the recall of the cached learner.
     if args.recall:
         if args.name:
-            eval_recall(args.name, oracle=oracle, path_recalls=args.recall_dataset)
+            eval_recall(args.name, path_recalls=args.recall_dataset)
         else:
-            eval_recall(args.grammar, oracle=oracle, path_recalls=None)
+            eval_recall(args.grammar, path_recalls=None)
         exit()
 
 
@@ -181,7 +180,6 @@ def main():
         ce = tokenize_string(oracle.name, args.run)
         vpa_learner = load_learner(oracle.name)
         vpa_learner.set_oracle(oracle)
-        vpa_learner.consolidate_vpa()
         # vpa_learner.print_matrix_info()
         # vpa_learner.print_mm_transitions()
         info(vpa_learner.pp_cxt(1))
