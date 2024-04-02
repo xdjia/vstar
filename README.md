@@ -44,7 +44,7 @@ docker run --rm xdjia/vstar:latest --mode external
 In comparison, our paper reports the evaluation results of two other grammar inference tools, namely Glade and Arvada. To evaluate them, run
 
 ```shell
-docker run --rm --entrypoint bash -it -v $(pwd)/result:/usr/src/vstar/result xdjia/vstar:latest -c "cd other-artifact && ./run_all.sh"
+docker run --rm --entrypoint bash -it -v $(pwd)/result:/usr/src/vstar/result xdjia/vstar:latest -c "./other-artifact/run_all.sh"
 ```
 
 Below is an example output:

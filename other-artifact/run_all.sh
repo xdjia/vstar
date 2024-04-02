@@ -19,12 +19,14 @@ if [ -z "$VHOME" ]; then
     VHOME="/usr/src/vstar"
 fi
 
+mkdir -p $VHOME/result/
+
 # NOTE - Evaluate Glade
 cd $VHOME/other-artifact/glade && PYTHON=$(which python) ./run_all_glade.sh
 mv $VHOME/other-artifact/glade/glade-results $VHOME/result/
 
 # NOTE - Evaluate Arvada
-cd /usr/src/vstar/other-artifact
+cd $VHOME/other-artifact
 
 HOME=$VHOME ./run_iteration_arvada.sh 0 $MAX_ITS
 HOME=$VHOME ./run_evaluation_arvada.sh 0 $MAX_ITS
