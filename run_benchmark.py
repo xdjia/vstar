@@ -54,4 +54,4 @@ if __name__ == '__main__':
               f"{format((num_q_token / num_q_all) * 100, '.2f')}%, " +
               f"{format((1 - num_q_token / num_q_all) * 100, '.2f')}%, " +
               f"{num_ce}, " +
-              f"{format(end_time - start_time, '.0f')} s", flush=True)
+              f"{format(end_time - start_time, '.0f')}s", flush=True)
