@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -e
+
 if [ ! -z "${NUM_ARVADA_ITS}" ]; then
 	if [ 1 -gt $NUM_ARVADA_ITS ]; then
 		echo "NUM_ARVADA_ITS must be an integer greater than or equal to 1"
@@ -23,6 +26,7 @@ mkdir -p $VHOME/result/
 
 # NOTE - Evaluate Glade
 cd $VHOME/other-artifact/glade && PYTHON=$(which python) ./run_all_glade.sh
+rm -rf $VHOME/result/glade-results
 mv $VHOME/other-artifact/glade/glade-results $VHOME/result/
 
 # NOTE - Evaluate Arvada
