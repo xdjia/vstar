@@ -162,6 +162,24 @@ VHOME=$(pwd) other-artifact/run_all.sh
 
 Finally, we note that all generated results are stored under `result/`. Free free to delete it.
 
+## A Note of the External Mode
+
+We need to clarify an issue with the "external" mode evaluation. The recall for `mathexpr` is 0.999, not 1.0, because V-Star rejects a specific string in the recall dataset. We call this string S-744, since it is contained in `micro-benchmarks/mathexpr/cpp-build/test_set/test-744.ex`. 
+
+However, this is not a mistake. V-Star correctly identifies S-744 as invalid, just as the oracle binary does, so the true recall accuracy remains 1.0.
+
+The presence of S-744 in the recall dataset, which should only contain valid strings, puzzled us at first. We traced the issue back to the dataset's origin in Arvada's artifact. 
+
+As mentioned in README, there are two modes: "internal" mode uses an internal Python library to recognize string, and we note that the library, Lark, uses a Lark grammar file; "external" mode uses an external binary, which is compiled from an ANTLR grammar file. The two grammar files reside at `lark-examples/mathexpr.lark` and `micro-benchmarks/mathexpr/cpp-build/g_mathexpr.g4`, respectively.
+
+Although the two grammar files should be (and indeed look like) the same, they actually specify different grammars. This is due to the following rule in `mathexpr`:
+
+`exprp: SPACE op SPACE expr exprp |;`
+
+Notice that the vertical bar `|` is not followed by any rules, which intuitively suggests that `exprp` can represent an empty string. Lark interprets it this way, but ANTLR doesn't. Consequently, S-744, which relies on this interpretation, is accepted by Lark but rejected by ANTLR.
+
+Therefore, we guess that Arvada generated the recall dataset using the Lark grammar, but the evaluation was conducted using the ANTLR grammar.
+
 ## How to Use
 
 ### Natively Supported Grammars

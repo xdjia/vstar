@@ -1,1 +1,1 @@
-git archive -o latest.zip HEAD && rm -rf ../latest.zip && mv latest.zip ..
+git archive -o vstar_artifact.zip HEAD && rm -rf ../vstar_artifact.zip && mv vstar_artifact.zip ..
