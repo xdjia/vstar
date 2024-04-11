@@ -193,7 +193,7 @@ Therefore, we guess that Arvada generated the recall dataset using the Lark gram
 
 ### Natively Supported Grammars
 
-Some grammar are supported by V-Star natively, including `json`, `while`, `xml` and `mathexpr`. To learn them, run
+Some grammar are supported by V-Star natively, including `lisp`, `json`, `while`, `xml` and `mathexpr`. To learn them, run
 ```shell
 # Learn tokenizer and grammar for 'lisp' and store them to `result/`
 python main.py --log-level INFO --grammar lisp --renew-pattern
