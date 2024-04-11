@@ -1,6 +1,6 @@
 # V-Star Artifact
 
-Welcome to the artifact repository for the PLDI paper #779, "V-Star: Learning Visibly Pushdown Grammars from Program Inputs." This artifact has been designed to reproduce the results presented in Table 1 of the paper.
+Welcome to the artifact repository for the PLDI paper #779, ["V-Star: Learning Visibly Pushdown Grammars from Program Inputs."](https://arxiv.org/abs/2404.04201) This artifact has been designed to reproduce the results presented in Table 1 of the paper.
 
 V-Star has two modes: in the "internal" mode, the oracle validates a string by calling a Python parsing library ([Lark](https://github.com/lark-parser/lark)). In the "external" mode of V-Star, reported in our paper, the oracle calls an external binary to validate a string. The two modes only affect the execution time: "external" mode would be much slower.
 
@@ -10,8 +10,17 @@ V-Star has two modes: in the "internal" mode, the oracle validates a string by c
 
 Our results can be reproduced using a Docker image, which can be fetched by:
 
-1. Pull the image from Docker Hub: `docker pull xdjia/vstar:latest`, or
-2. Build the image locally: `docker build -t xdjia/vstar:latest .`.
+1. Pull the image from Docker Hub:
+   
+   ```shell
+   docker pull xdjia/vstar:latest
+   ```
+
+2. Or, build the image locally: 
+   
+   ```shell
+   docker build -t xdjia/vstar:latest .
+   ```
 
 ### Step-by-Step Instructions
 
