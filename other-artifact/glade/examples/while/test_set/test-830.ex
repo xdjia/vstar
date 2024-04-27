@@ -1,1 +1,0 @@
-while (((n+((n+n)+n))+(((n+L)+n)+n))+(L+L)) == L do L = (n+(L+L))

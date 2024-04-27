@@ -1,1 +1,0 @@
-while n == (L+(n+(n+((n+(L+n))+(n+(n+L)))))) & n == (n+L) do skip

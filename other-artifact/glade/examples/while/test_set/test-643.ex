@@ -1,1 +1,0 @@
-while L == (L+(n+n)) do if (n+n) == L then skip else skip

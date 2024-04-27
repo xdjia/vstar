@@ -1,1 +1,0 @@
-degrees(sin(phi))

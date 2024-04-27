@@ -1,1 +1,0 @@
-if ~(n+L) == n & ~n == n then L = n else while n == (n+L) do L = n ; L = L

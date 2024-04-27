@@ -1,1 +1,0 @@
-L = (L+(((L+L)+L)+(L+((L+n)+n)))) ; while (n+L) == L do L = (n+L)

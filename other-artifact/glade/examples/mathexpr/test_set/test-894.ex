@@ -1,1 +1,0 @@
-tan(yq + e) + e - 82 * pi + i0hj / qaln * (e - (8)) / (-51.9 / e) - phi + atan(e) + 8

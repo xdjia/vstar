@@ -1,1 +1,0 @@
-if true & false & true & ((L+n)+L) == ((L+(L+n))+L) then skip else skip

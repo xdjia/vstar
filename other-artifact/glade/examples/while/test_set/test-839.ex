@@ -1,1 +1,0 @@
-while ~L == n & true do skip

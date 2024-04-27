@@ -1,1 +1,0 @@
-<a><e xB="A" D="zBuLw" EGS="g">Or</e></a>

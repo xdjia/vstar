@@ -1,6 +1,6 @@
 name: "while"
 empty: "skip ; skip"
 iserror: true
-extension: ".ex"
+extension: ".txt"
 command: "parse_while"
 traindir: "guides"

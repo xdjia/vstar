@@ -1,1 +1,0 @@
-skip ; L = (L+n) ; skip ; while true do skip

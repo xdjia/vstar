@@ -1,1 +1,0 @@
-while true do if L == L then L = n else skip

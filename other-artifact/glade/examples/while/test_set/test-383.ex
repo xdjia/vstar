@@ -1,1 +1,0 @@
-if ~false then L = L else while n == n do L = L

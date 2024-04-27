@@ -1,1 +1,0 @@
-if false then while false do while true do L = (L+L) else L = n

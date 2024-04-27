@@ -1,1 +1,0 @@
-while ~(((n+n)+((L+L)+(n+n)))+n) == n do skip

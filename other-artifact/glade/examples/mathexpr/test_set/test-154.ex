@@ -1,1 +1,0 @@
-((v + phi) * pi / phi) / pow(e, -1) - u_m / phi

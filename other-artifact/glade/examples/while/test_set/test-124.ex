@@ -1,1 +1,0 @@
-if false & n == (n+L) then skip else if false then L = (n+n) else L = n ; skip

@@ -1,1 +1,0 @@
-((euqo)) / 89 * ru_d + z_d_a - e - 0.08 * radians(degrees(pi) - e) * pi * cosh(pi) - 7 * 8

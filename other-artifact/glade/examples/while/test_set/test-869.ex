@@ -1,1 +1,0 @@
-while ((L+(L+(L+(L+(n+L)))))+L) == (n+L) do L = n ; L = L ; L = n ; L = (n+L)

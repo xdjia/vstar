@@ -1,1 +1,0 @@
-atan(tanh(pi) - 0, (e), -6, 1) + as

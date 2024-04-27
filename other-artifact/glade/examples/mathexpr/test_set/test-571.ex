@@ -1,1 +1,0 @@
-(-64 - exp(36, 3 / -3.1 * e, -2.9 * phi, (phi)) * z - qwcqi + (ceil(pi)) * (floor(e)))

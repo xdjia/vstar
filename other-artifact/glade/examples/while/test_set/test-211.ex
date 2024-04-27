@@ -1,1 +1,0 @@
-if L == L then if true then if true & L == L then if true then L = n else while true do skip else L = (n+L) else skip else skip

@@ -1,1 +1,0 @@
-while n == L do while ~~~true & true & ~true & true do L = n

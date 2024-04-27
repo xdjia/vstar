@@ -1,1 +1,0 @@
-pi + -150 + 9.6 * pi * radians(phi) / e

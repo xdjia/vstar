@@ -1,1 +1,0 @@
-if true & false & ~true & true then skip else skip

@@ -1,1 +1,0 @@
-exp((-39.0 + hypot(pi) + modf(phi) - o / e * 0.6) - 9, tanh(c7n, phi), (tan(pow(0)))) + 3814

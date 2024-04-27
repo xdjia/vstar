@@ -1,1 +1,0 @@
-asin(0 * phi) + 0.4 / (b - jo * phi - 3 * e + -6 * e) / e

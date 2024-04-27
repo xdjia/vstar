@@ -1,1 +1,0 @@
-while L == n do if false & ~true then while ~n == L & (L+n) == L do while true do L = (n+n) else skip ; skip ; if ~~true then L = (n+n) else skip

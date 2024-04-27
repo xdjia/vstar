@@ -1,1 +1,0 @@
-hypot((-49 - e + 1.60) / n_m - 4 - radians(0) / 0 + -9.5 + f - phi)

@@ -1,1 +1,0 @@
-(lql14w a (sny0 . g) ((uvas amy0)))

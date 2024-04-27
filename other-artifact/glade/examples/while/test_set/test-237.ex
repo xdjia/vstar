@@ -1,1 +1,0 @@
-while true do while true do if false then skip else while false do skip ; skip

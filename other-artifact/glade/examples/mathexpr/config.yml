@@ -1,6 +1,6 @@
 name: "mathexpr"
 empty: "-6 + 0"
 iserror: true
-extension: ".ex"
+extension: ".txt"
 command: "parse_mathexpr"
 traindir: "guides"

@@ -1,1 +1,0 @@
-while true do if false & ~true then while false do skip ; L = n else if false then skip else skip ; L = (n+((L+(n+((L+(L+n))+(n+L))))+L))

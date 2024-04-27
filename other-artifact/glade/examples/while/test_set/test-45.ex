@@ -1,1 +1,0 @@
-while true do if L == L then if ~~false then while true do skip ; while false do skip else if false then skip else if true then skip else skip else L = L

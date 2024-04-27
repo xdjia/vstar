@@ -1,1 +1,0 @@
-while true & true do while L == (L+n) do L = n

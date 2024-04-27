@@ -1,1 +1,0 @@
-dueg6_q + (z * phi + zyu)

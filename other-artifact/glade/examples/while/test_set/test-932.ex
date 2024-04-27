@@ -1,1 +1,0 @@
-if ~(n+n) == L then skip else L = L

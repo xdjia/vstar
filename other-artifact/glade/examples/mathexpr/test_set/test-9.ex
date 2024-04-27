@@ -1,1 +1,0 @@
-radians(fmod(pi)) + l / s / p_d - e

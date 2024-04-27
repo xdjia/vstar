@@ -1,1 +1,0 @@
-while (L+L) == ((L+(n+(L+(L+((L+n)+n)))))+n) do skip

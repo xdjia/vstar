@@ -686,7 +686,7 @@ if __name__ == '__main__':
     minimal_samples = sample_minimal('start', generic_rules)
     print_stats(minimal_samples, "Guides")
     for i, minimal_sample in enumerate(minimal_samples):
-        sample_name = os.path.join(guide_examples_folder, f"guide-{i}.ex")
+        sample_name = os.path.join(guide_examples_folder, f"guide-{i}.txt")
         try:
             sample_file = open(sample_name, "w")
             sample_file.write(minimal_sample)
@@ -708,7 +708,7 @@ if __name__ == '__main__':
     random_samples = sample_random_bound('start', generic_rules, 10)
     print_stats(random_samples, "Randoms")
     for i, random_samples in enumerate(random_samples):
-        sample_name = os.path.join(random_guide_examples_folder, f"guide-{i}.ex")
+        sample_name = os.path.join(random_guide_examples_folder, f"guide-{i}.txt")
         try:
             sample_file = open(sample_name, "w")
             sample_file.write(random_samples)
@@ -731,7 +731,7 @@ if __name__ == '__main__':
     print_stats(test_samples, "Test set")
 
     for i, test_sample in enumerate(test_samples):
-        sample_name = os.path.join(test_set_folder, f"test-{i}.ex")
+        sample_name = os.path.join(test_set_folder, f"test-{i}.txt")
         try:
             sample_file = open(sample_name, "w")
             sample_file.write(test_sample)

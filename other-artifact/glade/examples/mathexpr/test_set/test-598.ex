@@ -1,1 +1,0 @@
--20.6 * tan(cos(0.2 - -9, log(e), e)) + phi + fl9_t * floor(zmx + 0, 82.1) + 0.8 + xgu + pi - ((6))

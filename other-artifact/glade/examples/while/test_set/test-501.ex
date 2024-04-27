@@ -1,1 +1,0 @@
-while true do while (((L+n)+L)+L) == n do while false do L = L

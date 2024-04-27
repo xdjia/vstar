@@ -1,1 +1,0 @@
-while true & ~false & false & true & false do skip

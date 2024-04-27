@@ -1,1 +1,0 @@
-(floor((e))) / (phi + 3) + -8.9 / atan(phi)

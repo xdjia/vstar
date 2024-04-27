@@ -1,1 +1,0 @@
-(e / pi) / sinh(pi, pi) * (phi) / phi

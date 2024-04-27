@@ -1,1 +1,0 @@
-oy * hutl + (2.9) * phi * 1 - phi

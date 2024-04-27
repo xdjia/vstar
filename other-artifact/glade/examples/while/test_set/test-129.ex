@@ -1,1 +1,0 @@
-while false do L = (L+L) ; L = L ; while true do skip

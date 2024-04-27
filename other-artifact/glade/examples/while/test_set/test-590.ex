@@ -1,1 +1,0 @@
-while true & ~~~true & n == (L+((n+n)+L)) & false & true & ~false & true & true & false & true do L = (L+n) ; skip

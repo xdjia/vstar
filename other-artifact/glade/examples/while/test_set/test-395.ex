@@ -1,1 +1,0 @@
-while false do L = ((n+n)+n) ; skip ; L = ((n+n)+L)

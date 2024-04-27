@@ -1,1 +1,0 @@
-if ~n == (L+L) & L == (L+L) & ~true then L = n else skip

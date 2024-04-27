@@ -1,1 +1,0 @@
-while L == n & true & true & true do if (L+L) == ((L+((L+(n+L))+n))+L) then L = (L+L) else L = (n+L)

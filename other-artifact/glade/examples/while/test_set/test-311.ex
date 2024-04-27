@@ -1,1 +1,0 @@
-while (L+L) == ((L+n)+L) do if L == L then L = L else L = L

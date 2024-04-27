@@ -1,1 +1,0 @@
-pi / e + log10(xsx / phi) - radians(o - phi, fabs(phi)) + -1 + (pi) / 0 * phi - 14.018

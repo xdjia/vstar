@@ -1,1 +1,0 @@
-modf(tanh((modf(f_k)) / 0 - 1.5) - (e), ts, vddoq)

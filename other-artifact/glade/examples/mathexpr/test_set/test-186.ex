@@ -1,1 +1,0 @@
-hypot(g0g / pi)

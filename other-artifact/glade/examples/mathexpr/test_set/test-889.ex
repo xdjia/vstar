@@ -1,1 +1,0 @@
-zdjp * frexp(6)

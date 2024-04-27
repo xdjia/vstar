@@ -1,1 +1,0 @@
-while ~(n+n) == n do L = ((L+((n+L)+L))+(n+((((n+L)+n)+L)+(n+n))))

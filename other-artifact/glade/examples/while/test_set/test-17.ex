@@ -1,1 +1,0 @@
-while ~L == (n+n) do if false then L = (n+L) else while false do skip ; skip ; while false & false do skip

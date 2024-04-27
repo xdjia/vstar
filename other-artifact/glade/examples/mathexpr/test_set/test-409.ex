@@ -1,1 +1,0 @@
-cosh(tan(fcl4es * 76 - t + phi, ((radians(-5)) + pi)))

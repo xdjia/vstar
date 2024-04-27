@@ -1,1 +1,0 @@
-(-5635 + pi * (radians((0)) + e * -4 * 51.2) * i1c * pi / 545.1 / 6957.5557 + phi - phi / phi * phi - floor(-6) - e + pi * (atan2(phi)))

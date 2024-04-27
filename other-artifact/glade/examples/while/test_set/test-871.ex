@@ -1,1 +1,0 @@
-while ~~n == L do skip

@@ -1,1 +1,0 @@
-while L == n do while false do L = L

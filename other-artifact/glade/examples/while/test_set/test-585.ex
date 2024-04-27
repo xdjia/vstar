@@ -1,1 +1,0 @@
-while true do if n == L then L = L else L = (L+(L+(((L+((L+L)+L))+(L+n))+((((n+L)+n)+n)+L))))

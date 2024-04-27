@@ -1,1 +1,0 @@
--3 - (frexp(fmod((e - e)) * -8 - modf(-63 - tanh(e))))

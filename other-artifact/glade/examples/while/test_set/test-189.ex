@@ -1,1 +1,0 @@
-if n == L then skip ; skip else skip

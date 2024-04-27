@@ -1,1 +1,0 @@
-radians(-9, h_x, 1, pi) * e + e + (pi) * bqt

@@ -1,1 +1,0 @@
-(gf2 l (p g (z) a daw ((a w))))

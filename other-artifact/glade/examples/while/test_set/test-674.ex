@@ -1,1 +1,0 @@
-if ~true & true then if L == L then while n == L do skip else L = n else L = ((L+n)+(L+(((n+L)+n)+n)))

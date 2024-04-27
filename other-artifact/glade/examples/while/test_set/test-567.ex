@@ -1,1 +1,0 @@
-if ~true then while n == L do L = n else while false do skip

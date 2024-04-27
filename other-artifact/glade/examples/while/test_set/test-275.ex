@@ -1,1 +1,0 @@
-while false do skip ; L = L

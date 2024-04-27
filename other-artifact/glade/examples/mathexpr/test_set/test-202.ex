@@ -1,1 +1,0 @@
-(-5) / atan(e, pi) * ldexp(-9)

@@ -1,1 +1,0 @@
-while true do if false then L = ((L+L)+((L+L)+L)) else skip

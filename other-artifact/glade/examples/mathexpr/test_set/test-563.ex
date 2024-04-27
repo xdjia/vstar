@@ -1,1 +1,0 @@
-fmod(degrees(-4.4))

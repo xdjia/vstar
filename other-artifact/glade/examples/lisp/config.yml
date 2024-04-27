@@ -1,6 +1,6 @@
 name: "lisp"
 empty: "(k o)"
 iserror: true
-extension: ".ex"
+extension: ".txt"
 command: "parse_lisp"
 traindir: "guides"

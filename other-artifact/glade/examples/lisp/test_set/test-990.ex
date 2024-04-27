@@ -1,1 +1,0 @@
-((((z8 (n . (dn4 . p)) (q0p . (((i k) . ((y))) . (dpr . (e5 . (r . (r)))))) ((q1) . e21)) . ((m3v))) uldkyu vog) (l . ((qt) . fms)))

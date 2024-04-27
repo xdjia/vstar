@@ -1,1 +1,0 @@
-if ~true & n == L & L == ((n+L)+n) then while true do L = ((L+L)+n) else while false do skip

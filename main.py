@@ -56,7 +56,7 @@ def infer_grammar(args):
     if args.name:
         seeds_path = os.path.join(args.seeds, "*")
     else:
-        seeds_path = f"micro-benchmarks/{args.grammar}/guides/*.ex"
+        seeds_path = f"micro-benchmarks/{args.grammar}/guides/*.txt"
         
     seed_strings = Eval.collect_seed_strings(oracle, seeds_path)
     

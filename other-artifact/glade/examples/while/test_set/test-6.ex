@@ -1,1 +1,0 @@
-L = ((n+(L+n))+((L+n)+(L+n))) ; while ~false & false do L = n

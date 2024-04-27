@@ -1,1 +1,0 @@
-if true then while false & false do while false do L = L else while true do L = n ; L = n ; skip

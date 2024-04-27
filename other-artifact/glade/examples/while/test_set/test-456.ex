@@ -1,1 +1,0 @@
-while n == n do while ~n == (L+((n+n)+L)) do skip ; skip

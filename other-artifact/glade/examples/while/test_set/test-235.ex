@@ -1,1 +1,0 @@
-skip ; while ((n+n)+L) == L do skip

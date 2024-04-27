@@ -1,1 +1,0 @@
-if false then while true do L = L else while true & true & false do while true do L = n

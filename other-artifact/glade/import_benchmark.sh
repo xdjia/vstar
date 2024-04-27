@@ -25,9 +25,9 @@ cp -r $orig_example_dir/test_set $example_dir/test_set
 cp $orig_example_dir/parse_${name} $example_dir/parse_${name}
 
 echo "name: \"$name\"" >> $example_dir/config.yml
-echo "empty: \"$(cat ${orig_example_dir}/guides/guide-0.ex | sed 's/"/\\"/g')\"" >> $example_dir/config.yml
+echo "empty: \"$(cat ${orig_example_dir}/guides/guide-0.txt | sed 's/"/\\"/g')\"" >> $example_dir/config.yml
 echo "iserror: true" >> $example_dir/config.yml
-echo "extension: \".ex\"" >> $example_dir/config.yml
+echo "extension: \".txt\"" >> $example_dir/config.yml
 echo "command: \"parse_${name}\"" >> $example_dir/config.yml
 echo "traindir: \"guides\"" >> $example_dir/config.yml
 

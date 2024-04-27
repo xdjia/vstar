@@ -1,1 +1,0 @@
-while ~false & false & n == n do if (n+L) == n then L = L ; L = L ; skip ; skip ; skip ; skip else L = L

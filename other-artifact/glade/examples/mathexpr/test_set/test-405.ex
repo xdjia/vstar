@@ -1,1 +1,0 @@
-(modf(0.7)) - (e * cos(7 / phi) / phi) + h4kjy

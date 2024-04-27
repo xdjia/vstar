@@ -1,1 +1,0 @@
-if ~true then skip else L = L ; while ~true do skip

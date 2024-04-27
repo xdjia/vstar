@@ -1,1 +1,0 @@
-atan2(b_v, 0, pi, pi) / cosh(6) / frexp(-9)

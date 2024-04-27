@@ -1,1 +1,0 @@
-(yc (ge2 (bi . (z . ru))) ((ed) . (((((l7 t u)) (w) ub ((j) . ((n) . (r))) k (z . j)) ((s . (ny)) (((d . t) . (o . c)) v (w)))) . (iy . (o6 r j)))))

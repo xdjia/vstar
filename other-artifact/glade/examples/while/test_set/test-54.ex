@@ -1,1 +1,0 @@
-if false & L == L then L = L else skip

@@ -1,1 +1,0 @@
-while ((n+L)+n) == n do skip

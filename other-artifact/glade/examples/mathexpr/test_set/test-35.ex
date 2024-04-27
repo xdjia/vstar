@@ -1,1 +1,0 @@
-phi * e * e / ((e)) / 0 - zcr + pi

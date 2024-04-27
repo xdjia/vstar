@@ -1,1 +1,0 @@
-while (n+(L+(n+L))) == L & false do L = (L+L) ; skip

@@ -1,1 +1,0 @@
-hypot((cosh(4)), pi) / 3 / phi - e * 9

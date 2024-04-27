@@ -173,7 +173,7 @@ Finally, we note that all generated results are stored under `result/`. Free fre
 
 ## A Note of the External Mode
 
-We need to clarify an issue with the "external" mode evaluation. The recall for `mathexpr` is 0.999, not 1.0, because V-Star rejects a specific string in the recall dataset. We call this string S-744, since it is contained in `micro-benchmarks/mathexpr/cpp-build/test_set/test-744.ex`. 
+We need to clarify an issue with the "external" mode evaluation. The recall for `mathexpr` is 0.999, not 1.0, because V-Star rejects a specific string in the recall dataset. We call this string S-744, since it is contained in `micro-benchmarks/mathexpr/cpp-build/test_set/test-744.txt`. 
 
 However, this is not a mistake. V-Star correctly identifies S-744 as invalid, just as the oracle binary does, so the true recall accuracy remains 1.0.
 

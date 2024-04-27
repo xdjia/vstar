@@ -1,6 +1,6 @@
 name: "json"
 empty: "\"M\""
 iserror: true
-extension: ".ex"
+extension: ".txt"
 command: "parse_json"
 traindir: "guides"

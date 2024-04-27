@@ -1,1 +1,0 @@
-sin((c), 2.4, radians(s5j))

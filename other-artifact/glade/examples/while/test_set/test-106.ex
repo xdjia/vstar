@@ -1,1 +1,0 @@
-if n == L then while L == L do skip else skip ; L = L

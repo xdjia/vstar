@@ -1,1 +1,0 @@
-L = L ; while false do skip ; L = (L+n) ; L = n ; L = n

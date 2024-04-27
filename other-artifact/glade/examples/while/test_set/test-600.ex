@@ -1,1 +1,0 @@
-if n == ((n+(n+(n+(n+(L+(n+L))))))+L) then skip else skip

@@ -46,7 +46,7 @@ The directory `bc-example` contains a minimal example of learning a calculator l
 
 First ensure that [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) is installed; it should come standard on most linux distributions. If everything works fine, the following command should run without error:
 ```
-$ ./bc-example/bc-wrapper.sh bc-example/train_set/guide-0.ex
+$ ./bc-example/bc-wrapper.sh bc-example/train_set/guide-0.txt
 ```
 
 You can learn a grammar from the oracle `./bc-example/bc-wrapper` and the provided examples in `bc-example/train_set` as follows:

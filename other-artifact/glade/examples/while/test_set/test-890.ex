@@ -1,1 +1,0 @@
-while true do if true & true & true & true then L = ((L+n)+L) else skip

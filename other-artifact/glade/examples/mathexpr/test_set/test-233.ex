@@ -1,1 +1,0 @@
-ct / tan(phi) * phi - phi

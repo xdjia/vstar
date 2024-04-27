@@ -1,1 +1,0 @@
-L = L ; L = n ; while ~false & false do L = L

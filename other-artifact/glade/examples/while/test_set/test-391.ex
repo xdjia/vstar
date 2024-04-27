@@ -1,1 +1,0 @@
-L = L ; while (n+L) == n do L = L

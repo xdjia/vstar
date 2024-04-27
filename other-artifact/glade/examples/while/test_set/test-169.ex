@@ -1,1 +1,0 @@
-while true & false do L = L ; L = (L+L)

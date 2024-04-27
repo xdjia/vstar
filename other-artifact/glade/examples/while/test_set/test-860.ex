@@ -1,1 +1,0 @@
-L = ((n+n)+((n+L)+L)) ; while n == n do skip

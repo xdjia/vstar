@@ -1,1 +1,0 @@
-while L == (L+L) do skip

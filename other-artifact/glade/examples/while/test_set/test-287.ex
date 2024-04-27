@@ -1,1 +1,0 @@
-while ~n == n do L = (n+L)

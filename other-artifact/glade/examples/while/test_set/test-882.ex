@@ -1,1 +1,0 @@
-if true then skip else while true & n == L & (((n+(n+L))+L)+L) == n do if ~~~L == n then while L == (L+L) do skip else while L == n do L = n

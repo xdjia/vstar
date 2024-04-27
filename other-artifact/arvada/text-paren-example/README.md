@@ -7,7 +7,7 @@ Since this grammar consists solely of lowercase characters, Arvada will fail to 
 
 First, test that the oracle program runs without error on the training examples:
 ```
-$ text-paren-example/parser.py text-paren-example/train_set/guide-0.ex
+$ text-paren-example/parser.py text-paren-example/train_set/guide-0.txt
 ```
 (you may have to `pip install lark-parser`). If it exits silently with return code 0, everything is ok!
 

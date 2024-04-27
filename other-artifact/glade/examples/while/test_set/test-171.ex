@@ -1,1 +1,0 @@
-L = (L+n) ; while ((L+L)+n) == n do while false do while n == n do L = n

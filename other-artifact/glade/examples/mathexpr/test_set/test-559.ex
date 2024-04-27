@@ -1,1 +1,0 @@
-atan(radians(1 * sin(4), pi, l / pi), kig5_r, acos(exp(0) - phi, sinh(-9), pi) + o_mt / 46.7 - 2 / -6)

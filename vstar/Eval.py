@@ -21,7 +21,7 @@ def compute_recall(grammar_name: str,
     recall_test_strs = []
     if path_to_test_strs is None:
         path_to_test_strs = os.path.join(
-            "micro-benchmarks", grammar_name, "test_set", '*.ex')
+            "micro-benchmarks", grammar_name, "test_set", '*.txt')
     else:
         path_to_test_strs = os.path.join(path_to_test_strs, "*")
 
@@ -93,7 +93,7 @@ def collect_test_strings(oracle, grammar_name: str) -> list[str]:
 
     test_strs = []
 
-    path_test_strs = f"micro-benchmarks/{grammar_name}/test_set/*.ex"
+    path_test_strs = f"micro-benchmarks/{grammar_name}/test_set/*.txt"
     for seed_string in glob(path_test_strs):
         s = open(seed_string).readline().strip()
         test_strs.append(s)

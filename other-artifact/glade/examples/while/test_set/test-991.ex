@@ -1,1 +1,0 @@
-while (L+L) == n & false & ~~true & false do L = L

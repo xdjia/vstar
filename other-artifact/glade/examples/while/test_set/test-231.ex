@@ -1,1 +1,0 @@
-L = n ; if ~true then skip else while false do L = (n+L)

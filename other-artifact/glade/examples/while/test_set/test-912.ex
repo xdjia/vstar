@@ -1,1 +1,0 @@
-if false then L = n else skip ; skip

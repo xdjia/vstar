@@ -1,1 +1,0 @@
-(phi) - phi - pi * hv3x - ldexp(f1s, e, -8) * pi + sin(e, phi) + 0.8 - j_s + -5.7 / l / -6.3 * phi / 4 / 0

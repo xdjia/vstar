@@ -1,1 +1,0 @@
-skip ; if true then skip ; while false & true do if false then skip else skip else L = (L+(n+L))

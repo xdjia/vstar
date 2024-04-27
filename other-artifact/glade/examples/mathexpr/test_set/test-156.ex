@@ -1,1 +1,0 @@
-((phi * e) + i - 0 - frexp(pi))

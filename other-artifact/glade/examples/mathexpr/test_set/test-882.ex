@@ -1,1 +1,0 @@
-fmod(pi) / tanh(0.12) / gh / -54 / wtk * fmod(-76.9 * -770 * sin(-6) * 0) + uh_r

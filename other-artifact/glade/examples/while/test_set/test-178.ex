@@ -1,1 +1,0 @@
-skip ; if false then L = n else while ~~true do skip

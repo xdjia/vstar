@@ -1,1 +1,0 @@
-sinh((pi / floor(wbwps * (pow(phi, phi)), phi)), e)

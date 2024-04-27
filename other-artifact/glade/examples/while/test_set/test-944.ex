@@ -1,1 +1,0 @@
-if (n+L) == (n+(L+L)) then L = (n+L) else skip

@@ -1,1 +1,0 @@
-(gmw + abs(degrees(23.4, phi), 2) / frexp(phi, ceil(0))) + pi

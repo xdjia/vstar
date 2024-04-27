@@ -1,1 +1,0 @@
-((it5d - wkp) + e / modf(0) * phi)

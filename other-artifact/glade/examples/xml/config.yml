@@ -1,6 +1,6 @@
 name: "xml"
 empty: "<c l=\"L\">b</c>"
 iserror: true
-extension: ".ex"
+extension: ".txt"
 command: "parse_xml"
 traindir: "guides"

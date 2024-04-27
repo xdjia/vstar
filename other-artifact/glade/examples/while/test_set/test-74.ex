@@ -1,1 +1,0 @@
-if ~false then skip else while L == ((n+n)+n) do L = (L+L) ; skip

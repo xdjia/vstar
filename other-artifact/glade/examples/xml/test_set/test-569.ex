@@ -1,1 +1,0 @@
-<c uyc="ry" bw="pz"><a><a yi="t">S</a></a></c>

@@ -1,1 +1,0 @@
-while ~false do if true then skip else skip ; if false then skip else skip ; if ~false then if false then if true then skip else skip else while true do skip else while true do skip ; skip ; while true do L = n ; skip

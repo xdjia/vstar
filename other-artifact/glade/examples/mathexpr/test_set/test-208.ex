@@ -1,1 +1,0 @@
-fmod(sinh(9)) - radians(0, e) * k + 6 + 12.0
