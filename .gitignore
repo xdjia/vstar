@@ -140,6 +140,7 @@ figures/
 *.css
 tmp.*
 tmp
+*.tmp
 grammars-v4-master/
 fuzzer/
 .idea/

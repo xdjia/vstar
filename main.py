@@ -8,8 +8,9 @@ from vstar.Oracle import MODE, Oracle, create_oracle
 from vstar import SampleStrings, logger
 from vstar.Utils import info, lowercase, pp, uppercase, digits
 from vstar.NestingPattern import find_all_pattern, find_pattern
-from vstar.MatrixVStar import build_L2str, learn_vpa, load_learner, print_grammar
+from vstar.MatrixVStar import build_L2str, learn_vpa, load_learner
 from vstar.Tokenizer import learn_tokenizer, load_tokenizer, tokenize_string
+from vstar.Types import print_grammar
 
 
 def eval_recall(name: str, path_recalls:None|str):
@@ -132,8 +133,6 @@ def main():
         else:
             eval_recall(args.grammar, path_recalls=None)
         exit()
-
-
 
     if args.check:
         info(f'𝒪({pp(args.check)})={oracle(args.check)}')
