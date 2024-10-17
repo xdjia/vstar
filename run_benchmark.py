@@ -47,10 +47,11 @@ if __name__ == '__main__':
 
         recall = eval_recall(grammar_name, None)
 
-        oracle = create_oracle(grammar_name, mode="internal")  # to compute the precision faster
+        # accelerate precision computing
+        oracle = create_oracle(grammar_name, mode="internal")
         # oracle = create_oracle(grammar_name, mode=args.mode)
         prec = eval_prec(grammar_name, oracle)
-        
+
         f1 = 2 / (1 / recall + 1 / prec)
 
         print(f"{grammar_name}, {recall}, {prec}, {f1}, {num_q_all}, " +

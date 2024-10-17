@@ -135,7 +135,7 @@ def main():
         exit()
 
     if args.check:
-        info(f'𝒪({pp(args.check)})={oracle(args.check)}')
+        print(f'𝒪({pp(args.check)})={oracle(args.check)}')
         exit()
 
     # NOTE - Tokenize given string.

@@ -14,13 +14,13 @@ from .Tokenizer import Tokenizer, expand_tokens
 SENTENCE = list[str | tuple[str]]
 
 
-def gen_pe(grammar: GRAMMAR, L2str: dict[str, list[str]],
-           L2eps: set[str], max_depth: int, L: str, cur_depth=0) -> str:
+def gen_pe(grammar: GRAMMAR, L2str: dict[str, set[str]],
+           max_depth: int, L: str, cur_depth=0) -> str:
     """ Sample strings that can be derived from `L` """
 
     if cur_depth >= max_depth:
         assert L in L2str, L
-        return random.choice(L2str[L])
+        return random.choice(list(L2str[L]))
 
     if L not in grammar:
         print(L, 'not in grammar:')
@@ -36,14 +36,14 @@ def gen_pe(grammar: GRAMMAR, L2str: dict[str, list[str]],
         case "":
             return ""
         case alt, L2:
-            sL2 = gen_pe(grammar, L2str, L2eps, max_depth,
+            sL2 = gen_pe(grammar, L2str, max_depth,
                          L2, cur_depth + 1)
             sym = random.choice(alt)
             match sym:
                 case str(c):
                     return c + sL2
                 case (a, L1, b):
-                    return a + gen_pe(grammar, L2str, L2eps, max_depth,
+                    return a + gen_pe(grammar, L2str, max_depth,
                                       L1, cur_depth + 1) + b + sL2
                 case _:
                     raise ValueError(sym)
@@ -51,7 +51,7 @@ def gen_pe(grammar: GRAMMAR, L2str: dict[str, list[str]],
 
 def build_prec_strs(
     tokenizer: Tokenizer, vpa_learner,
-    grammar: GRAMMAR, L2eps: set[str], L2str: dict[str, list[str]],
+    grammar: GRAMMAR, L2str: dict[str, set[str]],
     max_depth=10, num_to_sample=1000
 ) -> list[str]:
     """ Sample strings from the learner's VPA. """
@@ -59,7 +59,7 @@ def build_prec_strs(
 
     sampled_strings: list[str] = []
 
-    MAX_ITERATION = 10000
+    MAX_ITERATION = 1000
     num_iteration = 0
     while len(sampled_strings) < num_to_sample:
         num_iteration += 1
@@ -67,7 +67,7 @@ def build_prec_strs(
             # raise RuntimeError("Iteration limit reached.")
             break
 
-        s = gen_pe(grammar, L2str, L2eps, max_depth, start_nt, 0)
+        s = gen_pe(grammar, L2str, max_depth, start_nt, 0)
         # print('sampled:', s)
         token_seq = tokenizer.eagar_tokenize("".join(s))
         ts = expand_tokens("".join(s), token_seq)

@@ -30,6 +30,7 @@ debug = logger.debug
 warning = logger.warning
 critical = logger.critical
 
+
 def loop_with_timeout(iterable, timeout):
     start_time = time.time()
     for item in iterable:
@@ -67,7 +68,7 @@ def _pps(s: str, color: f_color = red):
 
 def _pp_nt(name: str, color: f_color = red):
     """ Pretty print a nonterminal. """
-    
+
     if not color:
         return name
 
@@ -82,7 +83,7 @@ def pp(s: str | int | tuple | list,
        nt2name: None | L2name = None,
        delim: str = " "):
     """ Pretty print different V-Star objects. """
-    
+
     match s:
         case str():
             return _pps(s, color)

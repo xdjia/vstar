@@ -160,3 +160,6 @@ result*/
 __MACOSX/
 file_parser
 micro-benchmarks/*/parse_*
+
+*.png
+*.pdf

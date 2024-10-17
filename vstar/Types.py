@@ -16,12 +16,18 @@ MOD_NT = tuple[int, int]
 # NOTE - MOD_NT and access word
 MOD_NT_ACC = tuple[MOD_NT, str]
 
+M_TERMINAL = str | tuple[str, str, str]
+M_TERMINALs = list[M_TERMINAL]
+
+ALT = Literal[""] | tuple[M_TERMINALs, str]
+
+ALTs = list[ALT]
+
 # NOTE - Compact VPG forms {L: [cs, L1] }, where cs:
 #        list[str | tuple[str, str, str]] is terminal sequence.
-GRAMMAR = dict[str, list[tuple[list[str | tuple[str, str, str]], str]|Literal['']]]
+GRAMMAR = dict[str, ALTs]
 
-IGRAMMAR = dict[int, dict[str, list[Literal[""] |
-                                    tuple[list[str | tuple[str, str, str]], str]]]]
+IGRAMMAR = dict[int, dict[str, ALTs]]
 
 
 # NOTE - merged alternatives
@@ -31,7 +37,9 @@ MALT = str | tuple[str, MOD_NT_ACC, str]
 MGRAMMAR = dict[int,
                 defaultdict[tuple[MOD_NT_ACC, MOD_NT_ACC],
                             list[MALT]]]
-def pp_cs(cs: list[str | tuple[str, str, str]]):
+
+
+def pp_cs(cs: M_TERMINALs):
     """ Pretty print terminal sequences. """
 
     pp_s = []
@@ -45,7 +53,7 @@ def pp_cs(cs: list[str | tuple[str, str, str]]):
     return "".join(pp_s)
 
 
-def pp_alt(alt: tuple[list[str | tuple[str, str, str]], str]|Literal['']):
+def pp_alt(alt: ALT):
     """ Pretty print rule alternative. """
 
     match alt:
@@ -67,14 +75,14 @@ def pp_nt(nt: tuple[int, int]):
     return pp(f"m{nt[0]}_{nt[1]}", color=blue)
 
 
+def pp_grammar(grammar: GRAMMAR):
+    s = []
+    for L, alts in grammar.items():
+        s.append(pp(L) + ' -> ' + ' | '.join(pp_alt(alt) for alt in alts))
+
+    return '\n'.join(s)
+
+
 def print_grammar(grammar: GRAMMAR):
     # NOTE - print grammar info
-    for L, alts in grammar.items():
-        for alt in alts:
-            match alt:
-                case (cs, L2):
-                    info(f"{L} -> {pp_cs(cs)} {L2}")
-                case "":
-                    info(f"{L} -> eps")
-                case _:
-                    raise ValueError
+    print(pp_grammar(grammar))

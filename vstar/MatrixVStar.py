@@ -24,7 +24,7 @@ from .Utils import info, lowercase, uppercase, digits
 from .Utils import path_to_result, art_call, art_retn
 from .Automata import DFA, remove_unacceptable_states, run_dfa
 
-from .Types import TOKEN, MOD_NT, GRAMMAR, IGRAMMAR, pp_alt, pp_cs, pp_cxt, print_grammar
+from .Types import TOKEN, MOD_NT, ALTs, M_TERMINALs, GRAMMAR, IGRAMMAR, pp_alt, pp_cs, pp_cxt, pp_grammar, print_grammar
 
 
 def print_matrix(module, cxt2i, matrix, Q: list[str],
@@ -214,7 +214,7 @@ class VPALearner:
         # NOTE - consolidated VPA
         self.module_q2p_ms: list[
             dict[tuple[str, str],
-                 list[str | tuple[str, str, str]]]]
+                 M_TERMINALs]]
         self.module_q2p_ms = []
 
         self.module_transitions: list[
@@ -585,49 +585,101 @@ class VPALearner:
             info(f"Q (M{module}) is " +
                  ",".join(pp(q) for q in self.Qs[module]))
 
+    def prune_grammar(self, grammar: GRAMMAR) -> GRAMMAR:
+        def reachable_alt(reachable_nts, alt: M_TERMINALs):
+            for sym in alt:
+                match sym:
+                    case str():
+                        return True
+                    case (_, L, _):
+                        return L in reachable_nts
+            return False
+        # NOTE - Found which nonterminals lead to terminal strings
+        reachable_nts = [L for L in grammar if "" in grammar[L]]
+
+        MAX_ITERATION = 10000
+        num_iteration = 0
+        new_reachable = True
+
+        while new_reachable:
+            num_iteration += 1
+            if num_iteration == MAX_ITERATION:
+                # info(pp(list(awaiting_Ls), delim=','))
+                raise RuntimeError("Iteration limit reached.")
+
+            new_reachable = False
+
+            for L, alts in grammar.items():
+                if L in reachable_nts:
+                    continue
+
+                for elem in alts:
+                    match elem:
+                        case alt, L2:
+                            if L2 in reachable_nts:
+                                if reachable_alt(reachable_nts, alt):
+                                    new_reachable = True
+                                    reachable_nts.append(L)
+                                    # print('find_reachable', L, '->', L2)
+                                    break
+                        case '':
+                            pass
+                        case _:
+                            raise ValueError
+
+        print("reachable_nts " + pp(reachable_nts, delim=','))
+
+        # NOTE - remove unreachable rules
+        grammar = {L: grammar[L] for L in grammar if L in reachable_nts}
+        for L, alts in grammar.items():
+            grammar[L] = new_alts = []
+            for alt in alts:
+                match alt:
+                    case c, L2:
+                        print('Consider', L, pp_alt(alt))
+                        if L2 in reachable_nts:
+                            new_alts.append(alt)
+                    case _:
+                        new_alts.append(alt)
+
+        # TODO - remove below
+        print("Pruned grammar")
+        print_grammar(grammar)
+
+        return grammar
+
     def print_num_states(self, ):
         num_states = sum(len(Q) for Q in self.Qs)
+
         print(num_states, self._oracle.print_info())
 
         self.consolidate_vpa()
 
-        # print('acc:', self.acc_states)
-        # print('acc:', self.Q2id[0][self.acc_states[0]])
-
-        # self.module_transitions = []  # to refresh the VPA
-
         recall, _ = Eval.compute_recall(
             self.grammar_name, self, self.tokenizer, None)
 
-        grammar, L2eps = self.vpa2vpg()
-        for L in grammar:
-            if not grammar[L] and L not in L2eps:
-                info(L)
-                raise ValueError
+        grammar = self.vpa2vpg()
 
-        # print("step 1 m0_L0 is ", ' \n'.join(pp_alt(alt) for alt in grammar['m0_L0']))
-        # print('L2eps', L2eps)
-
-        L2str = build_L2str(grammar, L2eps)
-        # print("step 2 m0_L0 is ", ' \n'.join(pp_alt(alt) for alt in grammar['m0_L0']))
+        L2str = build_L2str(grammar)
 
         tokenizer = self.tokenizer
 
         print("The VPG:")
         for L, alts in grammar.items():
             print(f"    {L} -> {' | '.join(pp_alt(alt) for alt in alts)}")
-            if not alts:
-                assert L in L2eps
 
         sampled_strings = SampleStrings.build_prec_strs(
-            tokenizer, self, grammar, L2eps, L2str)
+            tokenizer, self, grammar, L2str)
 
         assert sampled_strings
         prec, _ = Eval.compute_prec(self.oracle, sampled_strings)
 
-        f1 = 2 / (1 / recall + 1 / prec)
+        f1 = 2 * recall * prec / (recall + prec)
 
         print('R:', recall, 'P:', prec, 'F1:', f1)
+
+        if recall < 0.1:
+            exit()
 
         self.history.append((f1, self._oracle.print_info()))
 
@@ -649,10 +701,12 @@ class VPALearner:
         Convert equivalence classes to a more effcient form of VPA. 
         """
 
-        if not self.acc_states:
-            self.acc_states = accept_q = [
-                q for q in self.Qs[0] if self.oracle(q)]
-            debug("acc states " + pp(accept_q, delim=','))
+        self.acc_states = [q for q in self.Qs[0] if self.oracle(q)]
+
+        for module in range(self.n_classes):
+            print(f"Q (M{module}) is " +
+                  ",".join(pp(q) for q in self.Qs[module]))
+        print("acc states " + pp(self.acc_states, delim=','))
 
         self.module_q2p_ms = []
 
@@ -687,7 +741,7 @@ class VPALearner:
 
                 # NOTE - merge the transitions
                 for eq_qc, cs in c_eqqc2ps.items():
-                    debug(f"M{module}: ({pp(q)},{pp(cs[0])}) -> {pp(eq_qc)}")
+                    print(f"M{module}: ({pp(q)},{pp(cs)}) -> {pp(eq_qc)}")
 
                     if (q, eq_qc) not in q2p_ms:
                         q2p_ms[q, eq_qc] = []
@@ -699,7 +753,7 @@ class VPALearner:
                 for (a, b), eq_qc_ps in ab_eqqc2ps.items():
                     cal_module = self.cals.index(a) + 1
                     for eq_qc, ps in eq_qc_ps.items():
-                        debug(pp(a) + " " + pp(b) + " " + pp(ps, delim=","))
+                        print(pp(a) + " " + pp(b) + " " + pp(ps, delim=","))
 
                         for p in ps:
                             if (q, eq_qc) not in q2p_ms:
@@ -951,7 +1005,7 @@ class VPALearner:
         for module in range(self.n_classes):
             rules: defaultdict[
                 str,
-                list[Literal[""] | tuple[list[str | tuple[str, str, str]], str]]]
+                ALTs]
             rules = module_rules[module]
             q2nti = module_q2nti[module]
             for q in self.Qs[module]:
@@ -959,7 +1013,7 @@ class VPALearner:
 
             for (q, p), ms in self.module_q2p_ms[module].items():
                 ps = defaultdict(set)
-                cs: list[str | tuple[str, str, str]] = []
+                cs: M_TERMINALs = []
                 for m in ms:
                     match m:
                         case (a, p2, b): ps[a, b].add(p2)
@@ -974,7 +1028,7 @@ class VPALearner:
         grammar: IGRAMMAR = {}
         # NOTE - for module 0
         for q in self.acc_states:
-            print('adding "" to acc ', q2nt(0, q))
+            # print('adding "" to acc ', q2nt(0, q))
             module_rules[0][q2nt(0, q)].append("")
 
         grammar[0] = module_rules[0]
@@ -992,7 +1046,7 @@ class VPALearner:
 
         return grammar
 
-    def vpa2vpg(self,) -> tuple[GRAMMAR, set[str]]:
+    def vpa2vpg(self,) -> GRAMMAR:
         """ Convert VPA to a VPG. """
 
         if not self.module_q2p_ms:
@@ -1009,51 +1063,34 @@ class VPALearner:
         igrammar = self.build_sub_grammar(ab_ps2i)
 
         grammar: GRAMMAR = {}
-        L2eps: set[str] = set()
+
         for i, rules in enumerate(igrammar.values()):
             for L, alts in rules.items():
                 mL = f"m{i}_" + L
-                # print('vpa2vpg:', i, mL, L, alts)
+                print('vpa2vpg:', mL, ':', ' | '.join(pp_alt(alt)
+                      for alt in alts))
                 assert mL not in grammar
                 grammar[mL] = []
                 for alt in alts:
                     match alt:
                         case "":
-                            L2eps.add(mL)
+                            grammar[mL].append("")
                         case (ms, L2):
                             grammar[mL].append((ms, f"m{i}_" + L2))
 
-        return grammar, L2eps
+        return self.prune_grammar(grammar)
 
 
-def build_L2str(grammar: GRAMMAR, L2eps: set[str]):
+def build_L2str(grammar: GRAMMAR) -> dict[str, set[str]]:
     """ 
     Return a dict L2str that maps nonterminal L to some of its strings. 
     Also remove redundancy in `grammar`.
     """
 
-    def alt_all_explored(alt: list[str | tuple[str, str, str]]):
-        for sym in alt:
-            match sym:
-                case (_, L, _):
-                    if L in awaiting_Ls:
-                        return False
-        return True
-
-    def reachable_alt(alt: list[str | tuple[str, str, str]]):
-        for sym in alt:
-            match sym:
-                case str():
-                    return True
-                case (_, L, _):
-                    if L in reachable_nts:
-                        return True
-        return False
-
-    def collect_alt(alt: list[str | tuple[str, str, str]]):
+    def collect_alt(ms: M_TERMINALs):
         strs: list[str] = []
 
-        for sym in alt:
+        for sym in ms:
             match sym:
                 case (a, L, b):
                     strs.extend([a + sL + b for sL in L2str[L]])
@@ -1062,76 +1099,10 @@ def build_L2str(grammar: GRAMMAR, L2eps: set[str]):
 
         return strs
 
-    # NOTE - Found which nonterminals lead to terminal strings
-    reachable_nts = list(L2eps)
-
     MAX_ITERATION = 10000
-    num_iteration = 0
-    new_reachable = True
 
-    while new_reachable:
-        num_iteration += 1
-        if num_iteration == MAX_ITERATION:
-            # info(pp(list(awaiting_Ls), delim=','))
-            raise RuntimeError("Iteration limit reached.")
-
-        new_reachable = False
-
-        for L, alts in grammar.items():
-            if L in reachable_nts:
-                continue
-
-            for elem in alts:
-                match elem:
-                    case alt, L2:
-                        if L2 in reachable_nts:
-                            if reachable_alt(alt):
-                                new_reachable = True
-                                reachable_nts.append(L)
-                                print('find_reachable', L, '->', L2)
-                                break
-                    case '':
-                        pass
-                    case _:
-                        raise ValueError
-
-    # print("reachable_nts " + pp(reachable_nts, delim=','))
-
-    # NOTE - remove unreachable rules
-    for L in list(grammar.keys()):
-
-        if L not in reachable_nts:
-            grammar.pop(L)
-            continue
-
-        if L not in grammar:
-            assert L in L2eps, L
-
-        for elem in list(grammar[L]):
-            match elem:
-                case alt, L2:
-                    if L2 not in reachable_nts:
-                        grammar[L].remove((alt, L2))
-                case "":
-                    pass
-                case _:
-                    raise ValueError
-
-    print_grammar(grammar)
-
-    # TODO - remove below
-    # print("pruned grammar")
-    # for L, alts in grammar.items():
-    #     for (cs, L2) in alts:
-    #         print(f"{L} -> {pp_cs(cs)} {L2}")
-
-    L2str: dict[str, list[str]] = {L: [] for L in grammar}
+    L2str: dict[str, set[str]] = {L: set() for L in grammar}
     awaiting_Ls: set[str] = set(grammar.keys())
-    for L in L2eps:
-        if L in grammar.keys():
-            L2str[L].append("")
-            if L in awaiting_Ls:
-                awaiting_Ls.remove(L)
 
     len_awaiting_Ls = len(awaiting_Ls)
     num_iteration = 0
@@ -1153,16 +1124,17 @@ def build_L2str(grammar: GRAMMAR, L2eps: set[str]):
                             assert L2str[L2], L2
                             alt_strs = collect_alt(alt)
                             if alt_strs:
-                                L2str[L] += [s1 + s2
-                                             for s1 in alt_strs
-                                             for s2 in L2str[L2]]
+                                for s1 in alt_strs:
+                                    for s2 in L2str[L2]:
+                                        L2str[L].add(s1 + s2)
 
                                 # print(L, 'alt_strs', alt_strs)
 
                                 awaiting_Ls.remove(L)
                                 break
                     case '':
-                        pass
+                        L2str[L].add('')
+                        awaiting_Ls.remove(L)
                     case _:
                         raise ValueError
 
@@ -1170,16 +1142,6 @@ def build_L2str(grammar: GRAMMAR, L2eps: set[str]):
             # print('awaiting_Ls:', pp(list(awaiting_Ls), delim=','))
             raise RuntimeError
         len_awaiting_Ls = len(awaiting_Ls)
-
-    # Add "" to grammar
-
-    for L in grammar:
-        if L in L2eps and '' not in grammar[L]:
-            grammar[L].append('')
-
-    for L in L2str:
-        print(L, L2str[L])
-        assert L2str[L], L
 
     return L2str
 
